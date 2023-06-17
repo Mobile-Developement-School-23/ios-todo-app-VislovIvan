@@ -1,7 +1,7 @@
 import XCTest
 @testable import ToDoList
 
-class TodoItemTests: XCTestCase {
+class TodoItemCSVTests: XCTestCase {
     
     func testParseCorrectCSV() {
         let id = "testID"

@@ -2,14 +2,14 @@ import Foundation
 
 // MARK: - TodoItem Structure
 
-enum Importance: String {
+enum Importance: String, Codable {
     case unimportant = "неважная"
     case normal = "обычная"
     case important = "важная"
 }
 
-struct TodoItem {
-    
+struct TodoItem: Codable {
+
     // TodoItem Properties
     let id: String
     let text: String
