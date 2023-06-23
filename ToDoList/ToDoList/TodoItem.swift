@@ -2,22 +2,22 @@ import Foundation
 
 // MARK: - TodoItem Structure
 
-enum Importance: String, Codable {
+enum Importance: String {
     case unimportant = "неважная"
     case normal = "обычная"
     case important = "важная"
 }
 
-struct TodoItem: Codable {
+struct TodoItem {
 
     // TodoItem Properties
     let id: String
     let text: String
     let importance: Importance
-    var deadline: Date?
-    var isFinished: Bool
+    let deadline: Date?
+    let isFinished: Bool
     let creationDate: Date
-    var modificationDate: Date?
+    let modificationDate: Date?
     
     init(
         id: String = UUID().uuidString,
@@ -48,12 +48,12 @@ extension TodoItem {
         
         guard let id = dictionary["id"] as? String else { return nil }
         guard let text = dictionary["text"] as? String else { return nil }
-        guard let importance = dictionary["importance"] as? String else { return nil }
+        let importance = dictionary["importance"] as? String
         guard let isFinished = dictionary["isFinished"] as? Bool else { return nil }
         guard let creationDateTimeInterval = dictionary["creationDate"] as? Double else { return nil }
         
         let creationDate = Date(timeIntervalSince1970: creationDateTimeInterval)
-        let importanceEnum = Importance(rawValue: importance) ?? .normal
+        let importanceEnum = Importance(rawValue: importance ?? "") ?? .normal
         var deadline: Date?
         var modificationDate: Date?
 
@@ -109,7 +109,7 @@ extension TodoItem {
         
         guard components.count >= 6 else { return nil }
 
-        let id = components[0] == "" ? UUID().uuidString : components[0]
+        let id = components[0].isEmpty ? UUID().uuidString : components[0]
         let text = components[1]
         let importanceRawValue = components[2]
         let importance = Importance(rawValue: importanceRawValue) ?? .normal

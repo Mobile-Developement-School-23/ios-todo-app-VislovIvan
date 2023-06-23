@@ -3,7 +3,7 @@ import Foundation
 // MARK: - FileCache Class
 
 class FileCache {
-    private var itemsDictionary: [String: TodoItem] = [:]
+    var itemsDictionary: [String: TodoItem] = [:]
     
     // Свойство для предоставления всех элементов в форме массива
     public var items: [TodoItem] {
