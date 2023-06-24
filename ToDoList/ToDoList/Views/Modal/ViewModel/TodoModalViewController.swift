@@ -132,6 +132,17 @@ final class TodoModalViewController: UIViewController, UIScrollViewDelegate {
         return wraper
     }()
 
+    // временное решение использовать 'colorPickerVC', реализую отображение 'colorPickerView', чтобы следовать архитектуре
+    private lazy var colorPickerViewController: ColorPickerViewController = {
+        let viewController = ColorPickerViewController()
+        return viewController
+    }()
+
+    private func addChildViewController() {
+        addChild(colorPickerViewController)
+        colorPickerViewController.didMove(toParent: self)
+    }
+
     private lazy var calendarSeparator = separator
 
     init(viewModel: TodoViewModel) {
@@ -166,10 +177,15 @@ extension TodoModalViewController {
         importanceView.valueDidChange = { [weak self] value in
             self?.viewModel.importanceDidChange(importance: value)
         }
+        
+        colorPickerViewController.colorDidChange = { [weak self] color in
+            self?.textView.textColor = color
+        }
 
         saveButton.isEnabled = false
 
         viewModel.viewDidLoad()
+        addChildViewController()
     }
 }
 
@@ -228,10 +244,12 @@ private extension TodoModalViewController {
         stackView.addArrangedSubview(bodyStackView)
         stackView.addArrangedSubview(deleteButton)
 
-        let subviews: [UIView] = [importanceView, separator, deadlineView, calendarSeparator, calendarWraper]
+        let subviews: [UIView] = [importanceView, separator, deadlineView, calendarSeparator, calendarWraper, separator]
 
         subviews.forEach {
             bodyStackView.addArrangedSubview($0)
+            
+            bodyStackView.addArrangedSubview(colorPickerViewController.view)
         }
 
         calendarSeparator.isHidden = true
@@ -264,7 +282,11 @@ private extension TodoModalViewController {
             placeholderLabel.topAnchor.constraint(equalTo: textView.topAnchor, constant: 16),
             placeholderLabel.leadingAnchor.constraint(equalTo: textView.leadingAnchor, constant: 20),
             placeholderLabel.trailingAnchor.constraint(equalTo: textView.trailingAnchor, constant: -16),
-            placeholderLabel.bottomAnchor.constraint(equalTo: textView.bottomAnchor, constant: -16)
+            placeholderLabel.bottomAnchor.constraint(equalTo: textView.bottomAnchor, constant: -16),
+            
+            deadlineView.heightAnchor.constraint(greaterThanOrEqualToConstant: 54),
+
+            colorPickerViewController.view.heightAnchor.constraint(equalToConstant: 320),
         ])
     }
 
@@ -275,6 +297,18 @@ private extension TodoModalViewController {
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    func showColorPicker() {
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            self?.colorPickerViewController.view.isHidden = false
+        }
+    }
+
+    func dismissColorPicker() {
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            self?.colorPickerViewController.view.isHidden = true
+        }
     }
 }
 

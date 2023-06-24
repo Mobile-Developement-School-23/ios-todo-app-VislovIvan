@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CE5C01E42A462668006E8463 /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5C01E32A462668006E8463 /* ColorPickerView.swift */; };
+		CE5C01E42A462668006E8463 /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5C01E32A462668006E8463 /* ColorPickerViewController.swift */; };
 		CECA24842A3B9B1D002EE7B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA24832A3B9B1D002EE7B5 /* AppDelegate.swift */; };
 		CECA24862A3B9B1D002EE7B5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA24852A3B9B1D002EE7B5 /* SceneDelegate.swift */; };
 		CECA24882A3B9B1D002EE7B5 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA24872A3B9B1D002EE7B5 /* HomeViewController.swift */; };
@@ -40,7 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		CE5C01E32A462668006E8463 /* ColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
+		CE5C01E32A462668006E8463 /* ColorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
 		CECA24802A3B9B1D002EE7B5 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CECA24832A3B9B1D002EE7B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CECA24852A3B9B1D002EE7B5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -123,7 +123,6 @@
 				CE2B30A72A45DAC600159A03 /* ViewModel */,
 				CEDFC9592A45B19400F8531B /* DeadlineView.swift */,
 				CEDFC9572A45B12200F8531B /* ImportanceView.swift */,
-				CE5C01E32A462668006E8463 /* ColorPickerView.swift */,
 			);
 			path = Modal;
 			sourceTree = "<group>";
@@ -158,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				CEDFC9552A45B0CF00F8531B /* TodoModalViewController.swift */,
+				CE5C01E32A462668006E8463 /* ColorPickerViewController.swift */,
 				CEDFC95B2A45B1B600F8531B /* TodoViewModel.swift */,
 				CEDFC95F2A45B29100F8531B /* TodoViewModelProtocol.swift */,
 			);
@@ -316,7 +316,7 @@
 				CEDFC9622A45B2AE00F8531B /* FileCacheProtocol.swift in Sources */,
 				CEDFC9542A45AF8800F8531B /* Images.swift in Sources */,
 				CECA24982A3BA378002EE7B5 /* TodoItem.swift in Sources */,
-				CE5C01E42A462668006E8463 /* ColorPickerView.swift in Sources */,
+				CE5C01E42A462668006E8463 /* ColorPickerViewController.swift in Sources */,
 				CEDFC95E2A45B27C00F8531B /* Date+Extension.swift in Sources */,
 				CEDFC9522A45AF5200F8531B /* Colors.swift in Sources */,
 				CEDFC95A2A45B19400F8531B /* DeadlineView.swift in Sources */,
