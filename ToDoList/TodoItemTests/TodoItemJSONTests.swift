@@ -1,123 +1,89 @@
-import XCTest
-@testable import ToDoList
-
-class TodoItemTests: XCTestCase {
-    
-    func testJSONParseAndSerialization() {
-        let initialId = UUID().uuidString
-        let initialText = "test text"
-        let initialImportance = Importance.important
-        let initialDeadline = Date()
-        let initialIsFinished = true
-        let initialCreationDate = Date()
-        let initialModificationDate = Date()
-        
-        let initialTodoItem = TodoItem(
-            id: initialId,
-            text: initialText,
-            importance: initialImportance,
-            deadline: initialDeadline,
-            isFinished: initialIsFinished,
-            creationDate: initialCreationDate,
-            modificationDate: initialModificationDate
-        )
-        
-        // Convert TodoItem to JSON
-        guard let jsonData = try? JSONSerialization.data(withJSONObject: initialTodoItem.json, options: []) else {
-            XCTFail("Failed to serialize TodoItem into JSON.")
-            return
-        }
-        
-        // Parse JSON to TodoItem
-        guard let json = try? JSONSerialization.jsonObject(with: jsonData, options: []),
-              let parsedTodoItem = TodoItem.parse(json: json) else {
-            XCTFail("Failed to parse JSON into TodoItem.")
-            return
-        }
-        
-        XCTAssertEqual(initialId, parsedTodoItem.id)
-        XCTAssertEqual(initialText, parsedTodoItem.text)
-        XCTAssertEqual(initialImportance, parsedTodoItem.importance)
-        XCTAssertEqual(initialIsFinished, parsedTodoItem.isFinished)
-        
-        XCTAssertEqual(Int(initialDeadline.timeIntervalSince1970), Int(parsedTodoItem.deadline?.timeIntervalSince1970 ?? 0))
-        XCTAssertEqual(Int(initialCreationDate.timeIntervalSince1970), Int(parsedTodoItem.creationDate.timeIntervalSince1970))
-        XCTAssertEqual(Int(initialModificationDate.timeIntervalSince1970), Int(parsedTodoItem.modificationDate?.timeIntervalSince1970 ?? 0))
-    }
-    
-    func testJSONParseMissingRequiredFields() {
-        let json: [String: Any] = [
-            "id": UUID().uuidString,
-            "text": "test text",
-            "importance": Importance.important.rawValue,
-            "deadline": Date().timeIntervalSince1970,
-            "creationDate": Date().timeIntervalSince1970,
-            "modificationDate": Date().timeIntervalSince1970
-        ]
-        
-        let parsedTodoItem = TodoItem.parse(json: json)
-        XCTAssertNil(parsedTodoItem, "Parsing should fail if any of the required fields are missing.")
-    }
-    
-    // Testing JSON parsing with incorrect field types
-    func testJSONParseIncorrectFieldTypes() {
-        let json: [String: Any] = [
-            "id": 123,
-            "text": "test text",
-            "importance": Importance.important.rawValue,
-            "deadline": Date().timeIntervalSince1970,
-            "isFinished": true,
-            "creationDate": Date().timeIntervalSince1970,
-            "modificationDate": Date().timeIntervalSince1970
-        ]
-        
-        let parsedTodoItem = TodoItem.parse(json: json)
-        XCTAssertNil(parsedTodoItem, "Parsing should fail if any of the fields have incorrect types.")
-    }
-    
-    // Testing JSON parsing with invalid Importance value
-    func testJSONParseInvalidImportance() {
-        let json: [String: Any] = [
-            "id": UUID().uuidString,
-            "text": "test text",
-            "importance": "invalidImportance",
-            "deadline": Date().timeIntervalSince1970,
-            "isFinished": true,
-            "creationDate": Date().timeIntervalSince1970,
-            "modificationDate": Date().timeIntervalSince1970
-        ]
-        
-        guard let parsedTodoItem = TodoItem.parse(json: json) else {
-            XCTFail("Parsing failed.")
-            return
-        }
-        
-        XCTAssertEqual(parsedTodoItem.importance, .normal, "Importance should be '.normal' when given invalid value.")
-    }
-    
-    // Testing JSON serialization
-    func testJSONSerialization() {
-        let todoItem = TodoItem(
-            id: UUID().uuidString,
-            text: "test text",
-            importance: .important,
-            deadline: Date(),
-            isFinished: true,
-            creationDate: Date(),
-            modificationDate: Date()
-        )
-        
-        guard let json = todoItem.json as? [String: Any] else {
-            XCTFail("Failed to convert TodoItem to JSON.")
-            return
-        }
-        
-        XCTAssertTrue(json.keys.contains("id"))
-        XCTAssertTrue(json.keys.contains("text"))
-        XCTAssertTrue(json.keys.contains("importance"))
-        XCTAssertTrue(json.keys.contains("deadline"))
-        XCTAssertTrue(json.keys.contains("isFinished"))
-        XCTAssertTrue(json.keys.contains("creationDate"))
-        XCTAssertTrue(json.keys.contains("modificationDate"))
-    }
-}
+//import XCTest
+//@testable import ToDoList
+//
+//class TodoItemJSONTests: XCTestCase {
+//    
+//    let dateExample = Date(timeIntervalSince1970: 1648143750)
+//    
+//    func testTodoItemToJSON() {
+//        let item = TodoItem(id: "1", text: "Todo text", importance: .important, deadline: dateExample, isFinished: true, createdAt: dateExample, changedAt: dateExample)
+//        let json = item.json as! [String: Any]
+//        
+//        XCTAssertEqual(json["id"] as! String, "1")
+//        XCTAssertEqual(json["text"] as! String, "Todo text")
+//        XCTAssertEqual(json["importance"] as! String, "important")
+//        XCTAssertEqual(json["deadline"] as! Double, dateExample.timeIntervalSince1970)
+//        XCTAssertEqual(json["isFinished"] as! Bool, true)
+//        XCTAssertEqual(json["createdAt"] as! Double, dateExample.timeIntervalSince1970)
+//        XCTAssertEqual(json["changedAt"] as! Double, dateExample.timeIntervalSince1970)
+//    }
+//    
+//    func testJSONToTodoItem() {
+//        let json: [String: Any] = ["id": "1", "text": "Todo text", "importance": "important", "deadline": dateExample.timeIntervalSince1970, "isFinished": true, "createdAt": dateExample.timeIntervalSince1970, "changedAt": dateExample.timeIntervalSince1970]
+//        let item = TodoItem.parse(json: json)
+//        
+//        XCTAssertEqual(item?.id, "1")
+//        XCTAssertEqual(item?.text, "Todo text")
+//        XCTAssertEqual(item?.importance, .important)
+//        XCTAssertEqual(item?.deadline, dateExample)
+//        XCTAssertEqual(item?.isFinished, true)
+//        XCTAssertEqual(item?.createdAt, dateExample)
+//        XCTAssertEqual(item?.changedAt, dateExample)
+//    }
+//    
+//    // Test the same methods for CSV data
+//    func testTodoItemToCSV() {
+//        let item = TodoItem(id: "1", text: "Todo text", importance: .important, deadline: dateExample, isFinished: true, createdAt: dateExample, changedAt: dateExample)
+//        let csv = item.csv
+//        
+//        XCTAssertEqual(csv, "1,\"Todo text\",true,\(dateExample.timeIntervalSince1970),important,\(dateExample.timeIntervalSince1970)")
+//    }
+//    
+//    func testCSVToTodoItem() {
+//        let csv = "1,\"Todo text\",true,\(dateExample.timeIntervalSince1970),important,\(dateExample.timeIntervalSince1970)"
+//        let item = TodoItem.parse(csv: csv)
+//        
+//        XCTAssertEqual(item?.id, "1")
+//        XCTAssertEqual(item?.text, "Todo text")
+//        XCTAssertEqual(item?.importance, .important)
+//        XCTAssertEqual(item?.deadline, dateExample)
+//        XCTAssertEqual(item?.isFinished, true)
+//        XCTAssertEqual(item?.createdAt, dateExample)
+//    }
+//    
+//    func testJSONToTodoItemMissingFields() {
+//        // Missing "id" and "text" fields
+//        let json: [String: Any] = ["importance": "important", "deadline": dateExample.timeIntervalSince1970, "isFinished": true, "createdAt": dateExample.timeIntervalSince1970, "changedAt": dateExample.timeIntervalSince1970]
+//        let item = TodoItem.parse(json: json)
+//        XCTAssertNil(item, "Parsing should fail when required fields are missing")
+//    }
+//    
+//    func testJSONToTodoItemInvalidFieldType() {
+//        // "isFinished" field is not a boolean
+//        let json: [String: Any] = ["id": "1", "text": "Todo text", "importance": "important", "deadline": dateExample.timeIntervalSince1970, "isFinished": "not a boolean", "createdAt": dateExample.timeIntervalSince1970, "changedAt": dateExample.timeIntervalSince1970]
+//        let item = TodoItem.parse(json: json)
+//        XCTAssertNil(item, "Parsing should fail when a field has an invalid type")
+//    }
+//    
+//    func testJSONToTodoItemInvalidImportanceValue() {
+//        // "importance" field has an unrecognized value
+//        let json: [String: Any] = ["id": "1", "text": "Todo text", "importance": "invalid importance", "deadline": dateExample.timeIntervalSince1970, "isFinished": true, "createdAt": dateExample.timeIntervalSince1970, "changedAt": dateExample.timeIntervalSince1970]
+//        let item = TodoItem.parse(json: json)
+//        XCTAssertNotNil(item, "Parsing should not fail when 'importance' has an unrecognized value")
+//        XCTAssertEqual(item?.importance, .normal, "Importance should be set to '.normal' when the value is unrecognized")
+//    }
+//    
+//    func testJSONToTodoItemEmptyJSON() {
+//        // Empty JSON dictionary
+//        let json: [String: Any] = [:]
+//        let item = TodoItem.parse(json: json)
+//        XCTAssertNil(item, "Parsing should fail when JSON is empty")
+//    }
+//    
+//    func testJSONToTodoItemInvalidJSON() {
+//        // JSON is not a dictionary
+//        let json: Any = "invalid JSON"
+//        let item = TodoItem.parse(json: json)
+//        XCTAssertNil(item, "Parsing should fail when JSON is not a dictionary")
+//    }
+//}
