@@ -14,6 +14,7 @@ struct TodoItem: Equatable {
     let isFinished: Bool
     let createdAt: Date
     let changedAt: Date?
+    let hexColor: String
 }
 
 extension TodoItem {
@@ -23,6 +24,7 @@ extension TodoItem {
         guard let id = json["id"] as? String,
               let text = json["text"] as? String,
               let isFinished = json["isFinished"] as? Bool,
+              let hexColor = json["hexColor"] as? String,
               let startTimeInterval = json["createdAt"] as? Double else { return nil }
         
         let startDate: Date = Date(timeIntervalSince1970: startTimeInterval)
@@ -49,7 +51,8 @@ extension TodoItem {
             deadline: deadline,
             isFinished: isFinished,
             createdAt: startDate,
-            changedAt: finishDate
+            changedAt: finishDate,
+            hexColor: hexColor
         )
     }
     
@@ -58,6 +61,7 @@ extension TodoItem {
             var dictionary: [String: Any] = ["id": id,
                                              "text": text,
                                              "isFinished": isFinished,
+                                             "hexColor": hexColor,
                                              "createdAt": createdAt.timeIntervalSince1970]
             
             if importance != .normal {
@@ -119,22 +123,23 @@ extension TodoItem {
     static func parse(csv: String) -> TodoItem? {
         let values = csv.components(separatedBy: ",")
         
-        guard values.count >= 4 else { return nil }
+        guard values.count >= 5 else { return nil }
         
         guard let id = values[0] as String?,
               let text = values[1].replacingOccurrences(of: "\"", with: "") as String?,
               let isFinished = Bool(values[2]),
+              let hexColor = values[3] as String?,
               let createdAtTimeInterval = Double(values[3]) else { return nil }
         
         let createdAt = Date(timeIntervalSince1970: createdAtTimeInterval)
         
         var importance: Importance = .normal
         if values.count > 4 {
-            importance = Importance(rawValue: values[4]) ?? .normal
+            importance = Importance(rawValue: values[5]) ?? .normal
         }
         
         var deadline: Date?
-        if values.count > 5, let deadlineTimeInterval = Double(values[5]) {
+        if values.count > 6, let deadlineTimeInterval = Double(values[6]) {
             deadline = Date(timeIntervalSince1970: deadlineTimeInterval)
         }
         
@@ -145,13 +150,14 @@ extension TodoItem {
             deadline: deadline,
             isFinished: isFinished,
             createdAt: createdAt,
-            changedAt: nil
+            changedAt: nil,
+            hexColor: hexColor
         )
     }
     
     var csv: String {
         get {
-            var result = "\(id),\"\(text)\",\(isFinished),\(createdAt.timeIntervalSince1970)"
+            var result = "\(id),\"\(text)\",\(isFinished),\(hexColor),\(createdAt.timeIntervalSince1970)"
             
             if importance != .normal {
                 result += ",\(importance.rawValue)"

@@ -385,8 +385,12 @@ extension TodoModalViewController {
     func set(importance: Importance) {
         importanceView.importance = importance
     }
-
+    
     func set(deadline: Date?) {
         deadlineView.deadline = deadline
+    }
+    
+    func set(hexColor: String) {
+        textView.textColor = UIColor(hex: hexColor)
     }
 }

@@ -12,7 +12,6 @@ final class TodoViewModel {
 
     private lazy var fileCache: FileCacheProtocol = FileCache(fileName: fileName)
 
-
     // MARK: - private properties
 
     private var id: String = UUID().uuidString
@@ -24,11 +23,15 @@ final class TodoViewModel {
     private var importance: Importance = .normal {
         didSet { view?.set(importance: importance) }
     }
-
+    
     private var deadline: Date? {
         didSet { view?.set(deadline: deadline) }
     }
-
+    
+    private var hexColor: String = "#FFFFFF" {
+        didSet { view?.set(hexColor: hexColor) }
+    }
+    
     private var isFinished: Bool = false
 
     private var startDate: Date = Date()
@@ -100,7 +103,8 @@ private extension TodoViewModel {
             deadline: deadline,
             isFinished: isFinished,
             createdAt: startDate,
-            changedAt: changedAt
+            changedAt: changedAt,
+            hexColor: hexColor
         )
 
         try? fileCache.change(item: newItem)
@@ -118,7 +122,10 @@ private extension TodoViewModel {
         isFinished = todo?.isFinished ?? isFinished
         startDate = todo?.createdAt ?? startDate
         changedAt = todo?.changedAt
-
+        hexColor = todo?.hexColor ?? "#FFFFFF"
+        
         saveData()
+        
+        view?.set(hexColor: hexColor)
     }
 }

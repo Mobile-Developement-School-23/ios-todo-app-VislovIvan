@@ -25,7 +25,6 @@ class ColorPickerViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             colorPicker.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            colorPicker.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             colorPicker.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
             colorPicker.heightAnchor.constraint(equalToConstant: 150),
             colorPicker.widthAnchor.constraint(equalToConstant: 150)
@@ -82,9 +81,9 @@ class ColorPickerViewController: UIViewController {
     @objc private func handlePanGesture(_ recognizer: UIPanGestureRecognizer) {
         let location = recognizer.location(in: colorPicker)
             
-        guard colorPicker.bounds.contains(location) else { return }
+        guard colorPicker.bounds.contains(location),
+            let color = colorPicker.getPixelColor(at: location) else { return }
             
-        let color = colorPicker.getPixelColor(at: location)
         colorPreview.backgroundColor = color
         hexLabel.text = color.toHex()
             
@@ -120,7 +119,7 @@ class ColorPickerViewController: UIViewController {
         
         guard colorPicker.bounds.contains(location) else { return }
         
-        let color = colorPicker.getPixelColor(at: location)
+        guard let color = colorPicker.getPixelColor(at: location) else { return }
         colorPreview.backgroundColor = color
         hexLabel.text = color.toHex()
         alphaSlider.value = 1
@@ -128,15 +127,17 @@ class ColorPickerViewController: UIViewController {
 }
 
 extension UIView {
-    func getPixelColor(at location: CGPoint) -> UIColor {
+    func getPixelColor(at location: CGPoint) -> UIColor? {
         let pixel = UnsafeMutablePointer<CUnsignedChar>.allocate(capacity: 4)
         
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
-        let context = CGContext(data: pixel, width: 1, height: 1, bitsPerComponent: 8, bytesPerRow: 4, space: colorSpace, bitmapInfo: bitmapInfo.rawValue)
+        guard let context = CGContext(data: pixel, width: 1, height: 1, bitsPerComponent: 8, bytesPerRow: 4, space: colorSpace, bitmapInfo: bitmapInfo.rawValue) else {
+            return nil
+        }
         
-        context?.translateBy(x: -location.x, y: -location.y)
-        layer.render(in: context!)
+        context.translateBy(x: -location.x, y: -location.y)
+        layer.render(in: context)
         
         let color: UIColor = UIColor(red: CGFloat(pixel[0]) / 255.0, green: CGFloat(pixel[1]) / 255.0, blue: CGFloat(pixel[2]) / 255.0, alpha: CGFloat(pixel[3]) / 255.0)
         
@@ -145,6 +146,7 @@ extension UIView {
         return color
     }
 }
+
 
 extension UIColor {
     func toHex() -> String? {
@@ -176,5 +178,26 @@ extension UIColor {
         } else {
             return String(format: "#%02lX%02lX%02lX", lroundf(r * 255), lroundf(g * 255), lroundf(b * 255))
         }
+    }
+}
+
+extension UIColor {
+    convenience init(hex: String) {
+        let scanner = Scanner(string: hex)
+        scanner.currentIndex = hex.hasPrefix("#") ? hex.index(after: hex.startIndex) : hex.startIndex
+
+        var rgbValue: UInt64 = 0
+        scanner.scanHexInt64(&rgbValue)
+
+        let r = (rgbValue & 0xFF0000) >> 16
+        let g = (rgbValue & 0x00FF00) >> 8
+        let b = rgbValue & 0x0000FF
+
+        self.init(
+            red: CGFloat(r) / 0xFF,
+            green: CGFloat(g) / 0xFF,
+            blue: CGFloat(b) / 0xFF,
+            alpha: 1
+        )
     }
 }
