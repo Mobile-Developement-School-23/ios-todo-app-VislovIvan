@@ -4,10 +4,8 @@ import UIKit
 
 final class IconWithDateModel {
 
-    /// Иконка с датой
     var icon: Image
 
-    /// Дата
     var date: Date
 
     init(icon: Image, date: Date) {
@@ -17,8 +15,6 @@ final class IconWithDateModel {
 }
 
 final class IconWithDateView: UIStackView {
-
-    // MARK: - Private properties
 
     private class Constants {
         static let fontsize: CGFloat = 16.0
@@ -38,7 +34,6 @@ final class IconWithDateView: UIStackView {
         return view
     }()
 
-
     // MARK: - Init
 
     init() {
@@ -50,9 +45,6 @@ final class IconWithDateView: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
 
-
-    // MARK: - Public methods
-
     func configure(with model: IconWithDateModel) {
         iconView.image = model.icon.image
 
@@ -61,7 +53,6 @@ final class IconWithDateView: UIStackView {
         titleLabel.text = dateFormatter.string(from: model.date)
     }
 }
-
 
 // MARK: - IconWithDateView extension
 

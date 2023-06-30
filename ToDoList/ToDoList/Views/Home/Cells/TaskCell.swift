@@ -31,7 +31,6 @@ final class TaskCell: UITableViewCell {
     private var lowPriorityIconWidthConstraint: NSLayoutConstraint?
     private var titleLabelLeadingAnchorConstraint: NSLayoutConstraint?
 
-    // MARK: - Вью интерфейсы -
     private let iconWithDateView = IconWithDateView()
 
     private let radioButtonView = RadioButtonView()

@@ -21,7 +21,6 @@ final class HomeViewModel {
     private lazy var fileCache: FileCacheProtocol = FileCache(fileName: fileName)
 }
 
-
 // MARK: - HomeViewModelDelegate
 
 extension HomeViewModel: HomeViewModelDelegate {
@@ -58,7 +57,6 @@ extension HomeViewModel: HomeViewModelDelegate {
         view?.reloadData()
     }
 }
-
 
 // MARK: - HomeViewModelProtocol
 
@@ -144,7 +142,6 @@ extension HomeViewModel: HomeViewModelProtocol {
     func fetchItems() {
         try? fileCache.loadItems(from: fileName)
 
-        // Временная фигня для дебага
         if (fileCache.items.count == 0) {
             let startArray = getStartArray()
             startArray.forEach {
@@ -204,7 +201,6 @@ extension HomeViewModel: HomeViewModelProtocol {
         view?.setupHeader(title: isHidden ? "Показать" : "Скрыть", amount: amount)
     }
 }
-
 
 // MARK: - Private methods
 

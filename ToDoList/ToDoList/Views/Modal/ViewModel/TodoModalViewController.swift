@@ -2,8 +2,6 @@ import UIKit
 
 final class TodoModalViewController: UIViewController, UIScrollViewDelegate {
 
-    // MARK: - Public properties
-
     var isSaveButtonEnabled: Bool {
         get {
             saveButton.isEnabled
@@ -20,7 +18,6 @@ final class TodoModalViewController: UIViewController, UIScrollViewDelegate {
             deleteButton.isHidden = isLandscape
             bodyStackView.isHidden = isLandscape
             if isLandscape {
-                // Пока костыль, ищу способ лучше
                 let bounds = UIScreen.main.bounds
                 let minHeight = bounds.height > bounds.width ? bounds.width : bounds.height
                 let barHeight = navigationController?.navigationBar.frame.maxY ?? 0
@@ -33,7 +30,6 @@ final class TodoModalViewController: UIViewController, UIScrollViewDelegate {
 
     private var textViewMinHeightConstraint: NSLayoutConstraint?
     
-    // MARK: - Константы -
     private class Constants {
         static let padding: CGFloat = 16.0
         static let textViewMinHeight: CGFloat = 120
@@ -100,7 +96,11 @@ final class TodoModalViewController: UIViewController, UIScrollViewDelegate {
         button.addTarget(self, action: #selector(clickCancel), for: .touchUpInside)
         return button
     }()
-
+    
+    /* проблема с обновлением цвета и передачей hexColor из Color Picker.
+    сейчас текст в ячейках не подреживает выбранный цвет из picker.
+    не успел исправить. */
+    
     private lazy var saveButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Сохранить", for: .normal)
@@ -242,7 +242,6 @@ extension TodoModalViewController: UITextViewDelegate {
             textView.textColor = UIColor.lightGray
         }
         
-//        placeholderLabel.isHidden = !textView.text.isEmpty
     }
 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -397,7 +396,6 @@ private extension TodoModalViewController {
         )
     }
     
-    // MARK: - Установка значений -
     func set(date: Date) {
         calendarView.setDate(date, animated: false)
     }
@@ -434,7 +432,6 @@ private extension TodoModalViewController {
         }
     }
 }
-
 
 // MARK: - Action extension
 

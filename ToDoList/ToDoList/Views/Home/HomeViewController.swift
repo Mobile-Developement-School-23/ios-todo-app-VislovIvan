@@ -3,11 +3,7 @@ import UIKit
 
 final class HomeViewController: UIViewController {
 
-    // MARK: - Public properties
-
     var items: [TodoViewModel] = []
-
-    // MARK: - Private properties
 
     private class Constants {
         static let widthPlusButton: CGFloat = 44.0
@@ -17,8 +13,6 @@ final class HomeViewController: UIViewController {
     }
 
     private var viewModel: HomeViewModelProtocol = HomeViewModel()
-
-    // MARK: - Интерфейсы
 
     private let tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .insetGrouped)
@@ -55,8 +49,6 @@ final class HomeViewController: UIViewController {
 
     private let headerView = TaskCellHeader()
 }
-
-// MARK: - Override methods
 
 extension HomeViewController {
 
@@ -139,7 +131,6 @@ extension HomeViewController: HomeViewControllerProtocol {
     }
 }
 
-
 // MARK: - Private methods
 
 private extension HomeViewController {
@@ -197,7 +188,7 @@ private extension HomeViewController {
 
 extension HomeViewController: UITableViewDataSource {
 
-    // MARK: - Настройка превью -
+    // MARK: - Preview
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let actionProvider: UIContextMenuActionProvider = { _ in
             return UIMenu(title: "Preview", children: [
@@ -221,15 +212,12 @@ extension HomeViewController: UITableViewDataSource {
             let controller = TodoModalViewController(viewModel: item)
             item.modal = controller
 
-            // Изменение дефолтной высоты
-//            controller.preferredContentSize.height = 350
             let navigationController = UINavigationController(rootViewController: controller)
             return navigationController
         }, actionProvider: actionProvider)
         return config
     }
 
-    /// Провалиться в превью экран
     func tableView(_ tableView: UITableView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
         guard let previewedController = animator.previewViewController else { return }
         animator.addCompletion {
@@ -237,7 +225,7 @@ extension HomeViewController: UITableViewDataSource {
         }
     }
 
-    // MARK: - Настройка ячейки таблицы -
+    // MARK: - Cells settings
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         if indexPath.row == self.items.count {
@@ -271,7 +259,6 @@ extension HomeViewController: UITableViewDataSource {
         return customCell
     }
 
-    // MARK: - Настройка шапки таблицы -
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         headerView.model = TaskCellHeaderModel(
             amount: 0,
@@ -284,24 +271,20 @@ extension HomeViewController: UITableViewDataSource {
     }
 }
 
-
 // MARK: - UITableViewDelegate
 
 extension HomeViewController: UITableViewDelegate {
 
-    // MARK: - Размер таблицы -
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count + 1 //я знаю, что это костыль
+        return items.count + 1
     }
 
-    // MARK: - Клик по ячейке таблицы -
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard tableView.cellForRow(at: indexPath) is TaskCell else { return }
         let model = self.items[indexPath.row]
         self.viewModel.openModal(with: model)
     }
 
-    // MARK: - Выползающие кнопки справа -
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         guard tableView.cellForRow(at: indexPath) is TaskCell else { return nil }
         
@@ -330,7 +313,6 @@ extension HomeViewController: UITableViewDelegate {
         return UISwipeActionsConfiguration(actions: [deleteButton, infoButton])
     }
 
-    // MARK: - Выползающие кнопки слева -
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         guard tableView.cellForRow(at: indexPath) is TaskCell else { return nil }
 
@@ -346,7 +328,6 @@ extension HomeViewController: UITableViewDelegate {
         return UISwipeActionsConfiguration(actions: [acceptButton])
     }
 }
-
 
 // MARK: - Action methods
 

@@ -2,17 +2,10 @@ import UIKit
 
 final class RadioButtonModel {
 
-    /// Статус кнопки
     var status: Status
 
-    /// Действие, необходимое для совершения при клике по кнопке
     var action: (() -> Void)?
 
-    /// Инициализатор
-    /// - Parameters:
-    ///   - status: Статус кнопки
-    ///   - model: Изменяемый объект
-    ///   - action: Действие, необходимое для совершения при клике по кнопке
     init(status: Status, action: (() -> Void)?) {
         self.status = status
         self.action = action
@@ -21,7 +14,6 @@ final class RadioButtonModel {
 
 extension RadioButtonModel {
 
-    /// Состояние кнопки
     enum Status {
         case on
         case off
@@ -84,7 +76,6 @@ private extension RadioButtonView {
         ])
     }
 }
-
 
 // MARK: - Actions
 

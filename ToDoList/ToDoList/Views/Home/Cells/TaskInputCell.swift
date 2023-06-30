@@ -1,18 +1,14 @@
 import UIKit
 
-/// Ячейка для таблицы с задачами
 final class TaskInputCell: UITableViewCell {
-
 
     // MARK: - Public properties
 
     var action: ((String) -> Void)?
 
-
     // MARK: - Static properties
 
     static let identifier: String = "TaskInputCell"
-
 
     // MARK: - Private properties
 
@@ -21,7 +17,6 @@ final class TaskInputCell: UITableViewCell {
         view.placeholder = "Новое"
         return view
     }()
-
 
     // MARK: - Init
 

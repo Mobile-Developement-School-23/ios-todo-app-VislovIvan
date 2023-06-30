@@ -1,18 +1,10 @@
 import UIKit
 
-/// Модель шапки таблицы с задачами
 final class TaskCellHeaderModel {
 
-    /// Кол-во задач
     var amount: Int = 0
-
-    /// Колбэк
     var action: ((Bool) -> Void)?
 
-    /// Инициализатор
-    /// - Parameters:
-    ///   - amount: Кол-во задач
-    ///   - action: Необходимое действие при клике по кнопке
     init(amount: Int, action: ((Bool) -> Void)?) {
         self.amount = amount
         self.action = action
@@ -27,14 +19,12 @@ class TaskCellHeader: UITableViewHeaderFooterView {
 
     var status: Bool = false
 
-    /// Модель шапки таблицы
     var model: TaskCellHeaderModel? {
         didSet {
             guard let model = model else { return }
             title.text = "Выполнено задач - \(model.amount)"
         }
     }
-
 
     // MARK: - Private properties
 
@@ -55,7 +45,6 @@ class TaskCellHeader: UITableViewHeaderFooterView {
         return view
     }()
 
-
     // MARK: - Init
 
     override init(reuseIdentifier: String?) {
@@ -67,22 +56,16 @@ class TaskCellHeader: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
 
-
     // MARK: - Public methods
 
-    /// Установить кол-во выполненных задач
-    /// - Parameter amount: Кол-во выполненных задач
     func setTask(with amount: Int) {
         self.title.text = "Выполнено задач - \(amount)"
     }
 
-    /// Установить значение кнопки
-    /// - Parameter value: Новое значение
     func setButtonTitle(with value: String) {
         self.buttonView.setTitle(value, for: .normal)
     }
 }
-
 
 // MARK: - Private methods
 
@@ -105,7 +88,6 @@ private extension TaskCellHeader {
         ])
     }
 }
-
 
 // MARK: - Actions
 
