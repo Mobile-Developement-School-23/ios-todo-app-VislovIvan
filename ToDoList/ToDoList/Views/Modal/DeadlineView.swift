@@ -125,7 +125,7 @@ extension DeadlineView {
         valueDidChange?(switcher.isOn)
     }
 
-    @objc func clickTitleLabel(sender:UITapGestureRecognizer) {
+    @objc func clickTitleLabel(sender: UITapGestureRecognizer) {
         deadLineDidClicked?()
     }
 }

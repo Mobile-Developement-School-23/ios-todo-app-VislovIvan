@@ -58,7 +58,7 @@ extension FileCache: FileCacheProtocol {
             throw FileCacheError.invalidJson
         }
         
-        guard let jsonArray = try JSONSerialization.jsonObject(with: data, options : []) as? [[String: Any]] else {
+        guard let jsonArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] else {
             throw FileCacheError.invalidJson
         }
         

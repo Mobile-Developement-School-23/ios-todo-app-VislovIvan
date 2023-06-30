@@ -14,7 +14,7 @@ class TodoItemCSVTests: XCTestCase {
             importance: .important,
             deadline: date,
             isFinished: true,
-            createdAt: date!,
+            createdAt: date,
             changedAt: date,
             hexColor: "#ffffff"
         )

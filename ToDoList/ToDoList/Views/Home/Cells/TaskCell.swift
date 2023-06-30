@@ -67,7 +67,6 @@ final class TaskCell: UITableViewCell {
         return view
     }()
 
-
     // MARK: - Init
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

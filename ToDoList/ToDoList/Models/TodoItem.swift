@@ -81,30 +81,28 @@ extension TodoItem {
     }
     
     var json: Any {
-        get {
-            var dictionary: [String: Any] = ["id": id,
-                                             "text": text,
-                                             "isFinished": isFinished,
-                                             "createdAt": createdAt.timeIntervalSince1970]
-            
-            if importance != .normal {
-                dictionary["importance"] = importance.rawValue
-            }
-            
-            if let deadline = deadline {
-                dictionary["deadline"] = deadline.timeIntervalSince1970
-            }
-            
-            if let changedAt = changedAt {
-                dictionary["changedAt"] = changedAt.timeIntervalSince1970
-            }
-            
-            if let hexColor = hexColor {
-                dictionary["hexColor"] = hexColor
-            }
-            
-            return dictionary
+        var dictionary: [String: Any] = ["id": id,
+                                         "text": text,
+                                         "isFinished": isFinished,
+                                         "createdAt": createdAt.timeIntervalSince1970]
+
+        if importance != .normal {
+            dictionary["importance"] = importance.rawValue
         }
+
+        if let deadline = deadline {
+            dictionary["deadline"] = deadline.timeIntervalSince1970
+        }
+
+        if let changedAt = changedAt {
+            dictionary["changedAt"] = changedAt.timeIntervalSince1970
+        }
+
+        if let hexColor = hexColor {
+            dictionary["hexColor"] = hexColor
+        }
+
+        return dictionary
     }
     
     var jsonString: String {
@@ -184,19 +182,17 @@ extension TodoItem {
     }
     
     var csv: String {
-        get {
-            var result = "\(id),\"\(text)\",\(isFinished),\(createdAt.timeIntervalSince1970),\(importance.rawValue),\(hexColor ?? "")"
-
-            if importance != .normal {
-                result += ",\(importance.rawValue)"
-            }
-            
-            if let deadline = deadline {
-                result += ",\(deadline.timeIntervalSince1970)"
-            }
-            
-            return result
+        var result = "\(id),\"\(text)\",\(isFinished),\(createdAt.timeIntervalSince1970),\(importance.rawValue),\(hexColor ?? "")"
+        
+        if importance != .normal {
+            result += ",\(importance.rawValue)"
         }
+        
+        if let deadline = deadline {
+            result += ",\(deadline.timeIntervalSince1970)"
+        }
+        
+        return result
     }
 }
 

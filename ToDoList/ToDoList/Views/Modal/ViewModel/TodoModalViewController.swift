@@ -226,9 +226,9 @@ extension TodoModalViewController {
 // MARK: - UITextViewDelegate
 
 extension TodoModalViewController: UITextViewDelegate {
-
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if (textView.textColor == UIColor.lightGray) {
+        if textView.textColor == UIColor.lightGray {
             textView.text = nil
             textView.textColor = UIColor.black
         }
@@ -253,6 +253,7 @@ extension TodoModalViewController: UITextViewDelegate {
 }
 
 // MARK: - TodoModalProtocol
+
 extension TodoModalViewController: TodoModalProtocol {
 
     func closeModal(animated: Bool) {
@@ -261,7 +262,7 @@ extension TodoModalViewController: TodoModalProtocol {
 
     func configure(with viewState: TodoViewState) {
         set(deadline: viewState.deadline)
-        set(text: viewState.text.count > 0 ? viewState.text : nil)
+        set(text: !viewState.text.isEmpty ? viewState.text : nil)
         set(importance: viewState.importance)
         if let deadline = viewState.deadline {
             set(date: deadline)
@@ -373,7 +374,7 @@ private extension TodoModalViewController {
             
             deadlineView.heightAnchor.constraint(greaterThanOrEqualToConstant: 54),
 
-            colorPickerViewController.view.heightAnchor.constraint(equalToConstant: 320),
+            colorPickerViewController.view.heightAnchor.constraint(equalToConstant: 320)
         ])
         textViewMinHeightConstraint = textView.heightAnchor.constraint(greaterThanOrEqualToConstant: Constants.textViewMinHeight)
         textViewMinHeightConstraint?.isActive = true
@@ -409,7 +410,7 @@ private extension TodoModalViewController {
         textView.text = text
         textView.textColor = Color.labelPrimary.color
         
-        saveButton.isEnabled = text.count != 0
+        saveButton.isEnabled = !text.isEmpty
     }
     
     func set(importance: Importance) {

@@ -14,15 +14,15 @@ class TodoItemJSONTests: XCTestCase {
             importance: .important,
             deadline: date,
             isFinished: true,
-            createdAt: date!,
+            createdAt: date,
             changedAt: date,
             hexColor: "#ffffff"
         )
         
         let json = originalItem.json
-        let jsonData = try! JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+        let jsonData = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
         
-        let jsonObject = try! JSONSerialization.jsonObject(with: jsonData, options: .allowFragments)
+        let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: .allowFragments)
         let newItem = TodoItem.parse(json: jsonObject)
         
         XCTAssertEqual(originalItem, newItem)

@@ -36,7 +36,7 @@ extension HomeViewModel: HomeViewModelDelegate {
             changedAt: state.changedAt
         )
 
-        let isExist = data.contains { $0.item.id == newItem.id  }
+        let isExist = data.contains { $0.item.id == newItem.id }
         if isExist {
             try? fileCache.change(item: newItem)
         } else {
@@ -72,7 +72,7 @@ extension HomeViewModel: HomeViewModelProtocol {
     }
 
     func toggleCompletedTasks() {
-        let sorted = data.filter { !$0.item.isFinished  }
+        let sorted = data.filter { !$0.item.isFinished }
         let cleaned = data.enumerated().compactMap { $0.element.item.isFinished ? $0.offset : nil }
         let indices = cleaned.compactMap { IndexPath(row: $0, section: 0) }
 
@@ -142,7 +142,7 @@ extension HomeViewModel: HomeViewModelProtocol {
     func fetchItems() {
         try? fileCache.loadItems(from: fileName)
 
-        if (fileCache.items.count == 0) {
+        if fileCache.items.isEmpty {
             let startArray = getStartArray()
             startArray.forEach {
                 try? fileCache.add(item: $0)
@@ -196,7 +196,7 @@ extension HomeViewModel: HomeViewModelProtocol {
     }
 
     func setupHeader() {
-        let filtered = data.filter { $0.item.isFinished  }
+        let filtered = data.filter { $0.item.isFinished }
         let amount = filtered.count
         view?.setupHeader(title: isHidden ? "Показать" : "Скрыть", amount: amount)
     }
@@ -206,7 +206,7 @@ extension HomeViewModel: HomeViewModelProtocol {
 
 private extension HomeViewModel {
     
-    func getStartArray() -> [TodoItem]{
+    func getStartArray() -> [TodoItem] {
         return [
             TodoItem(
                 text: "Купить что-то",
