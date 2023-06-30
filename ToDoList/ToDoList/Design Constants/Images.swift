@@ -1,9 +1,19 @@
 import UIKit
 
 enum Image: String {
-    case imageArrowDown20 = "imagePriorityDown"
-    case imageExclaminationPoint20 = "imagePriorityUp"
+    case imagePriorityDown = "imagePriorityDown"
+    case imagePriorityUp = "imagePriorityUp"
     case imagePlusCircleFill = "imagePlusCircleFill"
+    
+    case iconStatusOff = "iconStatusOff"
+    case iconStatusOn = "iconStatusOn"
+    case iconStatusHighPriority = "iconStatusHighPriority"
+
+    case iconArrowRight = "iconArrowRight"
+    case iconCalendar = "iconCalendar"
+
+    case iconInfo = "iconInfo"
+    case iconTrash = "iconTrash"
 }
 
 extension Image {

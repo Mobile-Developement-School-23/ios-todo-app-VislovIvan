@@ -2,8 +2,6 @@ import UIKit
 
 protocol TodoViewModelProtocol {
 
-    func viewDidLoad()
-
     func deadlineDidChange(isEnabled: Bool)
 
     func deadLineDidClick()

@@ -14,7 +14,27 @@ struct TodoItem: Equatable {
     let isFinished: Bool
     let createdAt: Date
     let changedAt: Date?
-    let hexColor: String
+    var hexColor: String?
+
+    init(
+        id: String = UUID().uuidString,
+        text: String,
+        importance: Importance = .normal,
+        deadline: Date? = nil,
+        isFinished: Bool = false,
+        createdAt: Date = Date(),
+        changedAt: Date? = nil,
+        hexColor: String? = nil
+    ) {
+        self.id = id
+        self.text = text
+        self.importance = importance
+        self.deadline = deadline
+        self.isFinished = isFinished
+        self.createdAt = createdAt
+        self.changedAt = changedAt
+        self.hexColor = hexColor
+    }
 }
 
 extension TodoItem {
@@ -24,14 +44,14 @@ extension TodoItem {
         guard let id = json["id"] as? String,
               let text = json["text"] as? String,
               let isFinished = json["isFinished"] as? Bool,
-              let hexColor = json["hexColor"] as? String,
               let startTimeInterval = json["createdAt"] as? Double else { return nil }
         
         let startDate: Date = Date(timeIntervalSince1970: startTimeInterval)
         var importance: Importance = .normal
         var deadline: Date?
         var finishDate: Date?
-        
+        var hexColor: String?
+
         if let rawValue = json["importance"] as? String, let value = Importance(rawValue: rawValue) {
             importance = value
         }
@@ -42,6 +62,10 @@ extension TodoItem {
         
         if let finishTimeInterval = json["changedAt"] as? Double {
             finishDate = Date(timeIntervalSince1970: finishTimeInterval)
+        }
+        
+        if let color = json["hexColor"] as? String {
+            hexColor = color
         }
         
         return TodoItem(
@@ -61,7 +85,6 @@ extension TodoItem {
             var dictionary: [String: Any] = ["id": id,
                                              "text": text,
                                              "isFinished": isFinished,
-                                             "hexColor": hexColor,
                                              "createdAt": createdAt.timeIntervalSince1970]
             
             if importance != .normal {
@@ -74,6 +97,10 @@ extension TodoItem {
             
             if let changedAt = changedAt {
                 dictionary["changedAt"] = changedAt.timeIntervalSince1970
+            }
+            
+            if let hexColor = hexColor {
+                dictionary["hexColor"] = hexColor
             }
             
             return dictionary
@@ -123,12 +150,11 @@ extension TodoItem {
     static func parse(csv: String) -> TodoItem? {
         let values = csv.components(separatedBy: ",")
         
-        guard values.count >= 5 else { return nil }
-        
+        guard values.count >= 6 else { return nil }
+
         guard let id = values[0] as String?,
               let text = values[1].replacingOccurrences(of: "\"", with: "") as String?,
               let isFinished = Bool(values[2]),
-              let hexColor = values[3] as String?,
               let createdAtTimeInterval = Double(values[3]) else { return nil }
         
         let createdAt = Date(timeIntervalSince1970: createdAtTimeInterval)
@@ -139,10 +165,12 @@ extension TodoItem {
         }
         
         var deadline: Date?
-        if values.count > 6, let deadlineTimeInterval = Double(values[6]) {
+        if values.count > 7, let deadlineTimeInterval = Double(values[7]) {
             deadline = Date(timeIntervalSince1970: deadlineTimeInterval)
         }
-        
+
+        let hexColor = values[6]
+
         return TodoItem(
             id: id,
             text: text,
@@ -157,8 +185,8 @@ extension TodoItem {
     
     var csv: String {
         get {
-            var result = "\(id),\"\(text)\",\(isFinished),\(hexColor),\(createdAt.timeIntervalSince1970)"
-            
+            var result = "\(id),\"\(text)\",\(isFinished),\(createdAt.timeIntervalSince1970),\(importance.rawValue),\(hexColor ?? "")"
+
             if importance != .normal {
                 result += ",\(importance.rawValue)"
             }
@@ -170,4 +198,20 @@ extension TodoItem {
             return result
         }
     }
+}
+
+extension TodoItem {
+
+  func toggleComplete() -> TodoItem {
+      return TodoItem(
+        id: self.id,
+        text: self.text,
+        importance: self.importance,
+        deadline: self.deadline,
+        isFinished: !self.isFinished,
+        createdAt: self.createdAt,
+        changedAt: self.createdAt,
+        hexColor: self.hexColor
+      )
+  }
 }
