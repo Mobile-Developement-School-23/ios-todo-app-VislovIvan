@@ -7,6 +7,7 @@ enum Color: String {
     case gray = "gray"
     case light = "light"
     case white = "white"
+    case grayLight = "grayLight"
 
     case backiOSPrimary = "backiOSPrimary"
     case backPrimary = "backPrimary"

@@ -31,14 +31,20 @@ final class DeadlineView: UIView {
             toggleButton.setOn(true, animated: false)
         }
     }
-
+    
     // MARK: - Private properties
-
+    
+    private class Constants {
+        static let margin: CGFloat = 16.0
+        static let fontsizeTitle: CGFloat = 17
+        static let fontsizeSubTitle: CGFloat = 13
+    }
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Сделать до"
         label.numberOfLines = 1
-        label.font = UIFont.systemFont(ofSize: 17)
+        label.font = UIFont.systemFont(ofSize: Constants.fontsizeTitle)
         label.textColor = Color.labelPrimary.color
         return label
     }()
@@ -46,7 +52,7 @@ final class DeadlineView: UIView {
     private let subTitleLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
-        label.font = UIFont.systemFont(ofSize: 13)
+        label.font = UIFont.systemFont(ofSize: Constants.fontsizeSubTitle)
         label.textColor = Color.blue.color
         return label
     }()
@@ -100,12 +106,12 @@ private extension DeadlineView {
 
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 9),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -9),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: Constants.margin),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constants.margin),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Constants.margin),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.margin),
             
-            toggleButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            toggleButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constants.margin),
             toggleButton.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }

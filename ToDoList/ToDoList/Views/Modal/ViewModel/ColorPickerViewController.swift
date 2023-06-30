@@ -180,24 +180,3 @@ extension UIColor {
         }
     }
 }
-
-extension UIColor {
-    convenience init(hex: String) {
-        let scanner = Scanner(string: hex)
-        scanner.currentIndex = hex.hasPrefix("#") ? hex.index(after: hex.startIndex) : hex.startIndex
-
-        var rgbValue: UInt64 = 0
-        scanner.scanHexInt64(&rgbValue)
-
-        let r = (rgbValue & 0xFF0000) >> 16
-        let g = (rgbValue & 0x00FF00) >> 8
-        let b = rgbValue & 0x0000FF
-
-        self.init(
-            red: CGFloat(r) / 0xFF,
-            green: CGFloat(g) / 0xFF,
-            blue: CGFloat(b) / 0xFF,
-            alpha: 1
-        )
-    }
-}

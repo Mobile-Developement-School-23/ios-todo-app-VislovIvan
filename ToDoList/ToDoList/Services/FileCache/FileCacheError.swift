@@ -5,3 +5,7 @@ enum FileCacheError: Error {
     case noDocumentDirectory
     case itemAlreadyExist
 }
+
+enum HomeViewModelError: Error {
+    case suchIdDoesntExist
+}
