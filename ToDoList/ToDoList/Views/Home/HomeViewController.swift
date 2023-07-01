@@ -1,5 +1,6 @@
 import UIKit
-
+import CocoaLumberjackSwift
+import DesignSystem
 
 final class HomeViewController: UIViewController {
 
@@ -54,6 +55,8 @@ extension HomeViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        DDLogInfo("HomeViewController - viewDidLoad")
 
         viewModel.view = self
 
@@ -136,6 +139,8 @@ extension HomeViewController: HomeViewControllerProtocol {
 private extension HomeViewController {
 
     func setupTable() {
+        DDLogInfo("HomeViewController - setupTable")
+
         tableView.register(TaskCell.self, forCellReuseIdentifier: TaskCell.identifier)
         tableView.register(TaskInputCell.self, forCellReuseIdentifier: TaskInputCell.identifier)
         tableView.register(TaskCellHeader.self, forHeaderFooterViewReuseIdentifier: TaskCellHeader.identifier)
@@ -189,6 +194,7 @@ private extension HomeViewController {
 extension HomeViewController: UITableViewDataSource {
 
     // MARK: - Preview
+    
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let actionProvider: UIContextMenuActionProvider = { _ in
             return UIMenu(title: "Preview", children: [
@@ -226,6 +232,7 @@ extension HomeViewController: UITableViewDataSource {
     }
 
     // MARK: - Cells settings
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         if indexPath.row == self.items.count {
@@ -262,7 +269,7 @@ extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         headerView.model = TaskCellHeaderModel(
             amount: 0,
-            action: { [weak self] isHidden in
+            action: { [weak self] _ in
                 self?.viewModel.toggleCompletedTasks()
             }
         )
@@ -288,7 +295,7 @@ extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         guard tableView.cellForRow(at: indexPath) is TaskCell else { return nil }
         
-        let infoButton = UIContextualAction(style: .normal, title: "", handler: { [weak self] (ac: UIContextualAction, view: UIView, success: (Bool) -> Void) in
+        let infoButton = UIContextualAction(style: .normal, title: "", handler: { [weak self] (_: UIContextualAction, _: UIView, success: (Bool) -> Void) in
             guard let self = self else { return success(true) }
             let model = self.items[indexPath.row]
             
@@ -297,8 +304,7 @@ extension HomeViewController: UITableViewDelegate {
             success(true)
         })
         
-        let deleteButton = UIContextualAction(style: .destructive, title:  "", handler: {
-            [weak self] (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+        let deleteButton = UIContextualAction(style: .destructive, title: "", handler: { [weak self] (_: UIContextualAction, _: UIView, success: (Bool) -> Void) in
             guard let self = self else { return success(true) }
             self.viewModel.delete(at: indexPath)
             success(true)
@@ -316,8 +322,7 @@ extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         guard tableView.cellForRow(at: indexPath) is TaskCell else { return nil }
 
-        let acceptButton = UIContextualAction(style: .normal, title:  "", handler: {
-            [weak self] (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+        let acceptButton = UIContextualAction(style: .normal, title: "", handler: { [weak self] (_: UIContextualAction, _: UIView, success: (Bool) -> Void) in
             guard let self = self else { return success(true) }
             let model = self.items[indexPath.row]
             self.viewModel.toggleStatus(on: model, at: indexPath)

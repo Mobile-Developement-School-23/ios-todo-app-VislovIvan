@@ -1,4 +1,5 @@
 import UIKit
+import DesignSystem
 
 final class TaskModel {
 
@@ -66,7 +67,6 @@ final class TaskCell: UITableViewCell {
         view.distribution = .fill
         return view
     }()
-
 
     // MARK: - Init
 

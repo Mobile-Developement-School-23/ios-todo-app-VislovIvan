@@ -19,6 +19,7 @@ class FileCache {
     }
     
     // MARK: - Add New Item
+    
     func add(item: TodoItem) {
         itemsDictionary[item.id] = item
     }
@@ -133,4 +134,3 @@ extension FileCache {
         }
     }
 }
-
