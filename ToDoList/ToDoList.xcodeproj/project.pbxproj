@@ -34,8 +34,6 @@
 		CEDB8C802A4F5F9F008A383E /* TodoViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDB8C7F2A4F5F9F008A383E /* TodoViewState.swift */; };
 		CEDB8C832A4F63DA008A383E /* CustomModalTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDB8C822A4F63DA008A383E /* CustomModalTransition.swift */; };
 		CEDB8C852A4F63F6008A383E /* CustomModalTransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDB8C842A4F63F6008A383E /* CustomModalTransitionDelegate.swift */; };
-		CEDFC9522A45AF5200F8531B /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFC9512A45AF5200F8531B /* Colors.swift */; };
-		CEDFC9542A45AF8800F8531B /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFC9532A45AF8800F8531B /* Images.swift */; };
 		CEDFC9562A45B0CF00F8531B /* TodoModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFC9552A45B0CF00F8531B /* TodoModalViewController.swift */; };
 		CEDFC9582A45B12200F8531B /* ImportanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFC9572A45B12200F8531B /* ImportanceView.swift */; };
 		CEDFC95A2A45B19400F8531B /* DeadlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDFC9592A45B19400F8531B /* DeadlineView.swift */; };
@@ -86,8 +84,6 @@
 		CEDB8C7F2A4F5F9F008A383E /* TodoViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoViewState.swift; sourceTree = "<group>"; };
 		CEDB8C822A4F63DA008A383E /* CustomModalTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalTransition.swift; sourceTree = "<group>"; };
 		CEDB8C842A4F63F6008A383E /* CustomModalTransitionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalTransitionDelegate.swift; sourceTree = "<group>"; };
-		CEDFC9512A45AF5200F8531B /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
-		CEDFC9532A45AF8800F8531B /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		CEDFC9552A45B0CF00F8531B /* TodoModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoModalViewController.swift; sourceTree = "<group>"; };
 		CEDFC9572A45B12200F8531B /* ImportanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportanceView.swift; sourceTree = "<group>"; };
 		CEDFC9592A45B19400F8531B /* DeadlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeadlineView.swift; sourceTree = "<group>"; };
@@ -139,8 +135,6 @@
 		CE2B30A02A45D95F00159A03 /* Design Constants */ = {
 			isa = PBXGroup;
 			children = (
-				CEDFC9532A45AF8800F8531B /* Images.swift */,
-				CEDFC9512A45AF5200F8531B /* Colors.swift */,
 				CEDB8C752A4F5BB3008A383E /* IconWithDateView.swift */,
 				CEDB8C772A4F5C4E008A383E /* RadioButtonView.swift */,
 			);
@@ -313,6 +307,7 @@
 				CECA247D2A3B9B1D002EE7B5 /* Frameworks */,
 				CECA247E2A3B9B1D002EE7B5 /* Resources */,
 				CE59FDA62A4F88F6001B7750 /* ShellScript */,
+				9B14AFC7EC98C7418BC2E5F2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -429,6 +424,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		9B14AFC7EC98C7418BC2E5F2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ToDoList/Pods-ToDoList-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ToDoList/Pods-ToDoList-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ToDoList/Pods-ToDoList-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		CE59FDA62A4F88F6001B7750 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -469,13 +481,11 @@
 				CEDFC9622A45B2AE00F8531B /* FileCacheProtocol.swift in Sources */,
 				CEDB8C782A4F5C4E008A383E /* RadioButtonView.swift in Sources */,
 				CEDB8C852A4F63F6008A383E /* CustomModalTransitionDelegate.swift in Sources */,
-				CEDFC9542A45AF8800F8531B /* Images.swift in Sources */,
 				CEDB8C6E2A4F5AFC008A383E /* HomeViewControllerProtocol.swift in Sources */,
 				CECA24982A3BA378002EE7B5 /* TodoItem.swift in Sources */,
 				CE5C01E42A462668006E8463 /* ColorPickerViewController.swift in Sources */,
 				CEDFC95E2A45B27C00F8531B /* Date+Extension.swift in Sources */,
 				CEDB8C802A4F5F9F008A383E /* TodoViewState.swift in Sources */,
-				CEDFC9522A45AF5200F8531B /* Colors.swift in Sources */,
 				CEDFC95A2A45B19400F8531B /* DeadlineView.swift in Sources */,
 				CECA249A2A3BE1A9002EE7B5 /* FileCache.swift in Sources */,
 				CECA24862A3B9B1D002EE7B5 /* SceneDelegate.swift in Sources */,

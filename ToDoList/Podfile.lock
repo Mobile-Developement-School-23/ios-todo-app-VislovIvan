@@ -1,16 +1,28 @@
 PODS:
+  - DesignSystem (0.1.0)
   - SwiftLint (0.51.0)
 
 DEPENDENCIES:
+  - DesignSystem (from `https://github.com/VislovIvan/DesignSystem.git`)
   - SwiftLint
 
 SPEC REPOS:
   trunk:
     - SwiftLint
 
+EXTERNAL SOURCES:
+  DesignSystem:
+    :git: https://github.com/VislovIvan/DesignSystem.git
+
+CHECKOUT OPTIONS:
+  DesignSystem:
+    :commit: c374ba7519d15ba91ceba24dac86c506395ba41d
+    :git: https://github.com/VislovIvan/DesignSystem.git
+
 SPEC CHECKSUMS:
+  DesignSystem: 5e0537e19746e09dfe2103689e5040f808919797
   SwiftLint: 1b7561918a19e23bfed960e40759086e70f4dba5
 
-PODFILE CHECKSUM: 2eb13ff6606e4dc946cf06ae2bc7134bc990f417
+PODFILE CHECKSUM: 97d81dfad8ef2d7924d93059e40bd88f30d7a82f
 
 COCOAPODS: 1.12.0

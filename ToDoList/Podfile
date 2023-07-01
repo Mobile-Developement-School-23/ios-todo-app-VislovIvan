@@ -8,5 +8,6 @@ target 'ToDoList' do
   # Pods for ToDoList
 
   pod 'SwiftLint'
+  pod 'DesignSystem', :git => 'https://github.com/VislovIvan/DesignSystem.git'
 
 end

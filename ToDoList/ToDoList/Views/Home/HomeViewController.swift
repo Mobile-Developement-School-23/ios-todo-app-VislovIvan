@@ -1,5 +1,6 @@
 import UIKit
 import CocoaLumberjackSwift
+import DesignSystem
 
 final class HomeViewController: UIViewController {
 

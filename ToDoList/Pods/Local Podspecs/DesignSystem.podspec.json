@@ -1,0 +1,22 @@
+{
+  "name": "DesignSystem",
+  "version": "0.1.0",
+  "summary": "A short description of DesignSystem.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/VislovIvan/DesignSystem",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "VislovIvan": "vislov.ivan@bk.ru"
+  },
+  "source": {
+    "git": "https://github.com/VislovIvan/DesignSystem.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "10.0"
+  },
+  "source_files": "DesignSystem/Classes/**/*"
+}

@@ -1,4 +1,5 @@
 import UIKit
+import DesignSystem
 
 final class RadioButtonModel {
 
