@@ -257,7 +257,7 @@ extension TodoModalViewController: UITextViewDelegate {
 
 extension TodoModalViewController: TodoModalProtocol {
 
-    func closeModal(animated: Bool) {
+    @MainActor func closeModal(animated: Bool) {
         self.dismiss(animated: animated)
     }
 
@@ -270,12 +270,12 @@ extension TodoModalViewController: TodoModalProtocol {
         }
     }
 
-    func setupDeadline(with date: Date) {
+    @MainActor func setupDeadline(with date: Date) {
         set(deadline: date)
         set(date: date)
     }
 
-    func showCalendar() {
+    @MainActor func showCalendar() {
         calendarView.layer.opacity = 1
         calendarSeparator.layer.opacity = 1
         UIView.animate(withDuration: 0.25) {

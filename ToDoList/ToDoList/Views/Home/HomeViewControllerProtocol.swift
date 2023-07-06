@@ -4,23 +4,23 @@ protocol HomeViewControllerProtocol: AnyObject {
 
     var items: [TodoViewModel] { get set }
 
-    func setupHeader(title: String, amount: Int)
+    @MainActor func setupHeader(title: String, amount: Int)
 
-    func reloadData()
+    @MainActor func reloadData()
 
-    func reloadSection()
+    @MainActor func reloadSection()
 
-    func reloadRows(at indexPathes: [IndexPath])
+    @MainActor func reloadRows(at indexPathes: [IndexPath])
 
-    func reloadRow(at indexPath: IndexPath)
+    @MainActor func reloadRow(at indexPath: IndexPath)
 
-    func deleteRow(at indexPath: IndexPath)
+    @MainActor func deleteRow(at indexPath: IndexPath)
 
-    func deleteRows(at indexPathes: [IndexPath])
+    @MainActor func deleteRows(at indexPathes: [IndexPath])
 
-    func insertRow(at indexPath: IndexPath)
+    @MainActor func insertRow(at indexPath: IndexPath)
 
-    func insertRows(at indexPathes: [IndexPath])
+    @MainActor func insertRows(at indexPathes: [IndexPath])
     
-    func present(modal: UINavigationController)
+    @MainActor func present(modal: UINavigationController)
 }

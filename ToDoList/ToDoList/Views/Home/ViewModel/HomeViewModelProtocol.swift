@@ -8,17 +8,17 @@ protocol HomeViewModelProtocol: AnyObject {
 
     func viewDidLoad()
 
-    func createTask(with text: String)
+    @MainActor func createTask(with text: String)
 
-    func delete(at indexPath: IndexPath)
+    @MainActor func delete(at indexPath: IndexPath)
 
-    func toggleStatus(on model: TodoViewModel, at: IndexPath)
+    @MainActor func toggleStatus(on model: TodoViewModel, at: IndexPath)
 
-    func openModal(with model: TodoViewModel?)
+    @MainActor func openModal(with model: TodoViewModel?)
 
-    func openInfoModal(with model: TodoViewModel?)
+    @MainActor func openInfoModal(with model: TodoViewModel?)
 
-    func toggleCompletedTasks()
+    @MainActor func toggleCompletedTasks()
 
-    func setupHeader()
+    @MainActor func setupHeader()
 }
