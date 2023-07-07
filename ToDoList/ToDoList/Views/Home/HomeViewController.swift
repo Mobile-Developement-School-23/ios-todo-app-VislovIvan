@@ -1,5 +1,4 @@
 import UIKit
-import CocoaLumberjackSwift
 import DesignSystem
 
 final class HomeViewController: UIViewController {
@@ -34,12 +33,6 @@ final class HomeViewController: UIViewController {
         return button
     }()
 
-    private let mainTitle: UILabel = {
-        let label = UILabel()
-        label.text = "Мои дела"
-        return label
-    }()
-
     private lazy var showAllButton: UIButton = {
         let button = UIButton()
         button.setTitle("Показать", for: .normal)
@@ -49,6 +42,10 @@ final class HomeViewController: UIViewController {
     }()
 
     private let headerView = TaskCellHeader()
+    
+    deinit {
+        print("deinit")
+    }
 }
 
 extension HomeViewController {
@@ -56,11 +53,9 @@ extension HomeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        DDLogInfo("HomeViewController - viewDidLoad")
-
         viewModel.view = self
 
-        navigationItem.title = "Дела"
+        navigationItem.title = "Мои дела"
 
         setupLayouts()
         setupConstraints()
@@ -139,8 +134,6 @@ extension HomeViewController: HomeViewControllerProtocol {
 private extension HomeViewController {
 
     func setupTable() {
-        DDLogInfo("HomeViewController - setupTable")
-
         tableView.register(TaskCell.self, forCellReuseIdentifier: TaskCell.identifier)
         tableView.register(TaskInputCell.self, forCellReuseIdentifier: TaskInputCell.identifier)
         tableView.register(TaskCellHeader.self, forHeaderFooterViewReuseIdentifier: TaskCellHeader.identifier)

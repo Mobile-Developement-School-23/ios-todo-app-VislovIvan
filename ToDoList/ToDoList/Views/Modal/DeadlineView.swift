@@ -53,7 +53,7 @@ final class DeadlineView: UIView {
     private let subTitleLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
-        label.font = UIFont.systemFont(ofSize: Constants.fontsizeSubTitle)
+        label.font = UIFont.boldSystemFont(ofSize: Constants.fontsizeSubTitle)
         label.textColor = Color.blue.color
         return label
     }()
