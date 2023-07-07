@@ -16,8 +16,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
         
         DDLog.add(DDOSLogger.sharedInstance)
-        dynamicLogLevel = .verbose
+//        dynamicLogLevel = .verbose
 //        testLogger()
+        
+//        let deviceID = UIDevice.current.identifierForVendor!.uuidString
+//        print(deviceID)
     }
     
     func sceneDidDisconnect(_: UIScene) {}

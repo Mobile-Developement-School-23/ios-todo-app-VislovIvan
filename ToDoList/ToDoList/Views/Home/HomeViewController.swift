@@ -123,9 +123,17 @@ extension HomeViewController: HomeViewControllerProtocol {
     @MainActor func insertRows(at indexPathes: [IndexPath]) {
         tableView.insertRows(at: indexPathes, with: .fade)
     }
-
+    
     func needToReloadTable() {
         self.tableView.reloadData()
+    }
+    
+    func showStatusIndicator() {
+        headerView.showActivityIndicator()
+    }
+    
+    func hideStatusIndicator() {
+        headerView.hideActivityIndicator()
     }
 }
 

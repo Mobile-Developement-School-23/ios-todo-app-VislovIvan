@@ -9,8 +9,13 @@
 /* Begin PBXBuildFile section */
 		CAC86D48EDC924672E58DA92 /* Pods_ToDoList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9CC1C5DF9985B0F7D41947 /* Pods_ToDoList.framework */; };
 		CE4A47112A583C75009146AA /* MockNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4A47102A583C75009146AA /* MockNetworkService.swift */; };
-		CE4A47132A583CB0009146AA /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4A47122A583CB0009146AA /* NetworkService.swift */; };
-		CE4A47152A583CC4009146AA /* NetworkServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4A47142A583CC4009146AA /* NetworkServiceProtocol.swift */; };
+		CE4A47132A583CB0009146AA /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4A47122A583CB0009146AA /* NetworkingService.swift */; };
+		CE4A47152A583CC4009146AA /* DefaultNetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4A47142A583CC4009146AA /* DefaultNetworkingService.swift */; };
+		CE4A471C2A5864C0009146AA /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4A471B2A5864C0009146AA /* ApiError.swift */; };
+		CE4A471E2A5864EA009146AA /* ApiTodoListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4A471D2A5864EA009146AA /* ApiTodoListModel.swift */; };
+		CE4A47212A586605009146AA /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4A47202A586605009146AA /* Debug.swift */; };
+		CE4A47232A58664A009146AA /* DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4A47222A58664A009146AA /* DispatchQueue.swift */; };
+		CE4A47252A586B78009146AA /* Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4A47242A586B78009146AA /* Variables.swift */; };
 		CE59FDA12A4F80D5001B7750 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = CE59FDA02A4F80D5001B7750 /* CocoaLumberjack */; };
 		CE59FDA32A4F80D5001B7750 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CE59FDA22A4F80D5001B7750 /* CocoaLumberjackSwift */; };
 		CE59FDA52A4F80D5001B7750 /* CocoaLumberjackSwiftLogBackend in Frameworks */ = {isa = PBXBuildFile; productRef = CE59FDA42A4F80D5001B7750 /* CocoaLumberjackSwiftLogBackend */; };
@@ -61,8 +66,13 @@
 		4B9CC1C5DF9985B0F7D41947 /* Pods_ToDoList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BFC640B73ADB8259C858BC9 /* Pods-ToDoList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoList.debug.xcconfig"; path = "Target Support Files/Pods-ToDoList/Pods-ToDoList.debug.xcconfig"; sourceTree = "<group>"; };
 		CE4A47102A583C75009146AA /* MockNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkService.swift; sourceTree = "<group>"; };
-		CE4A47122A583CB0009146AA /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
-		CE4A47142A583CC4009146AA /* NetworkServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceProtocol.swift; sourceTree = "<group>"; };
+		CE4A47122A583CB0009146AA /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
+		CE4A47142A583CC4009146AA /* DefaultNetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNetworkingService.swift; sourceTree = "<group>"; };
+		CE4A471B2A5864C0009146AA /* ApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiError.swift; sourceTree = "<group>"; };
+		CE4A471D2A5864EA009146AA /* ApiTodoListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiTodoListModel.swift; sourceTree = "<group>"; };
+		CE4A47202A586605009146AA /* Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
+		CE4A47222A58664A009146AA /* DispatchQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchQueue.swift; sourceTree = "<group>"; };
+		CE4A47242A586B78009146AA /* Variables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variables.swift; sourceTree = "<group>"; };
 		CE5C01E32A462668006E8463 /* ColorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
 		CE6CD6E62A5727B10096BE00 /* URLSession+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Extension.swift"; sourceTree = "<group>"; };
 		CECA24802A3B9B1D002EE7B5 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,6 +143,7 @@
 			children = (
 				CEDFC95D2A45B27C00F8531B /* Date+Extension.swift */,
 				CE6CD6E62A5727B10096BE00 /* URLSession+Extension.swift */,
+				CE4A47222A58664A009146AA /* DispatchQueue.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -220,11 +231,30 @@
 		CE4A470F2A583C48009146AA /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				CE4A471A2A5864B6009146AA /* ApiService */,
 				CE4A47102A583C75009146AA /* MockNetworkService.swift */,
-				CE4A47122A583CB0009146AA /* NetworkService.swift */,
-				CE4A47142A583CC4009146AA /* NetworkServiceProtocol.swift */,
+				CE4A47122A583CB0009146AA /* NetworkingService.swift */,
+				CE4A47142A583CC4009146AA /* DefaultNetworkingService.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		CE4A471A2A5864B6009146AA /* ApiService */ = {
+			isa = PBXGroup;
+			children = (
+				CE4A471B2A5864C0009146AA /* ApiError.swift */,
+				CE4A471D2A5864EA009146AA /* ApiTodoListModel.swift */,
+			);
+			path = ApiService;
+			sourceTree = "<group>";
+		};
+		CE4A471F2A5865F9009146AA /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				CE4A47202A586605009146AA /* Debug.swift */,
+				CE4A47242A586B78009146AA /* Variables.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		CECA24772A3B9B1D002EE7B5 = {
@@ -257,6 +287,7 @@
 				CE2B30A12A45D9FB00159A03 /* Views */,
 				CE2B30A02A45D95F00159A03 /* Design Constants */,
 				CE2B309D2A45D74500159A03 /* Extensions */,
+				CE4A471F2A5865F9009146AA /* Helpers */,
 				CECA248C2A3B9B1E002EE7B5 /* Assets.xcassets */,
 				CECA248E2A3B9B1E002EE7B5 /* LaunchScreen.storyboard */,
 				CECA24912A3B9B1E002EE7B5 /* Info.plist */,
@@ -484,6 +515,8 @@
 				CEDB8C702A4F5B1D008A383E /* HomeViewModel.swift in Sources */,
 				CEDFC9602A45B29100F8531B /* TodoViewModelProtocol.swift in Sources */,
 				CECA24882A3B9B1D002EE7B5 /* HomeViewController.swift in Sources */,
+				CE4A47252A586B78009146AA /* Variables.swift in Sources */,
+				CE4A471E2A5864EA009146AA /* ApiTodoListModel.swift in Sources */,
 				CEDB8C7E2A4F5C9F008A383E /* TaskCellHeader.swift in Sources */,
 				CEDB8C742A4F5B66008A383E /* HomeViewModelProtocol.swift in Sources */,
 				CEDB8C832A4F63DA008A383E /* CustomModalTransition.swift in Sources */,
@@ -491,9 +524,10 @@
 				CEDB8C7A2A4F5C7C008A383E /* TaskCell.swift in Sources */,
 				CECA24842A3B9B1D002EE7B5 /* AppDelegate.swift in Sources */,
 				CEDFC9642A45B46400F8531B /* FileCacheError.swift in Sources */,
-				CE4A47132A583CB0009146AA /* NetworkService.swift in Sources */,
+				CE4A47132A583CB0009146AA /* NetworkingService.swift in Sources */,
 				CEDB8C6A2A4F5A38008A383E /* HomeTableView.swift in Sources */,
 				CEDFC9562A45B0CF00F8531B /* TodoModalViewController.swift in Sources */,
+				CE4A471C2A5864C0009146AA /* ApiError.swift in Sources */,
 				CEDFC9622A45B2AE00F8531B /* FileCacheServiceProtocol.swift in Sources */,
 				CEDB8C782A4F5C4E008A383E /* RadioButtonView.swift in Sources */,
 				CEDB8C852A4F63F6008A383E /* CustomModalTransitionDelegate.swift in Sources */,
@@ -507,11 +541,13 @@
 				CECA249A2A3BE1A9002EE7B5 /* FileCache.swift in Sources */,
 				CECA24862A3B9B1D002EE7B5 /* SceneDelegate.swift in Sources */,
 				CEDFC95C2A45B1B600F8531B /* TodoViewModel.swift in Sources */,
-				CE4A47152A583CC4009146AA /* NetworkServiceProtocol.swift in Sources */,
+				CE4A47152A583CC4009146AA /* DefaultNetworkingService.swift in Sources */,
 				CEDB8C722A4F5B44008A383E /* HomeViewModelDelegate.swift in Sources */,
 				CE4A47112A583C75009146AA /* MockNetworkService.swift in Sources */,
 				CEDFC9582A45B12200F8531B /* ImportanceView.swift in Sources */,
 				CEDB8C762A4F5BB3008A383E /* IconWithDateView.swift in Sources */,
+				CE4A47232A58664A009146AA /* DispatchQueue.swift in Sources */,
+				CE4A47212A586605009146AA /* Debug.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

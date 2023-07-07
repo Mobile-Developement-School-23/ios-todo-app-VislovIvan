@@ -30,6 +30,10 @@ final class TodoViewModel {
     init(item: TodoItem) {
         self.item = item
     }
+    
+    init(item: ApiTodoItem) {
+        self.item = TodoViewModel.parse(item: item)
+    }
 }
 
 // MARK: - TodoViewModelProtocol
@@ -68,5 +72,24 @@ extension TodoViewModel: TodoViewModelProtocol {
     @MainActor func deleteButtonDidTap() {
         modal?.closeModal(animated: true)
         delegate?.didDelete(model: self)
+    }
+}
+
+private extension TodoViewModel {
+
+    static func parse(item: ApiTodoItem) -> TodoItem {
+        var importance: Importance = .normal
+        if let value = Importance(rawValue: item.importance) {
+            importance = value
+        }
+        return TodoItem(
+            id: item.id,
+            text: item.text,
+            importance: importance,
+            deadline: item.deadline,
+            isFinished: item.isFinished,
+            createdAt: item.createdAt,
+            changedAt: item.changedAt
+        )
     }
 }
