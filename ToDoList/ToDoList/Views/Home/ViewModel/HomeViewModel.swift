@@ -8,7 +8,9 @@ final class HomeViewModel {
 
     var data: [TodoViewModel] = [] {
         didSet {
-            setupHeader()
+            Task {
+                await setupHeader()
+            }
         }
     }
 
@@ -25,7 +27,7 @@ final class HomeViewModel {
 
 extension HomeViewModel: HomeViewModelDelegate {
 
-    func didUpdate(model: TodoViewModel, state: TodoViewState) {
+    @MainActor func didUpdate(model: TodoViewModel, state: TodoViewState) {
         let newItem = TodoItem(
             id: model.item.id,
             text: state.text,
@@ -49,7 +51,7 @@ extension HomeViewModel: HomeViewModelDelegate {
         view?.reloadData()
     }
 
-    func didDelete(model: TodoViewModel) {
+    @MainActor func didDelete(model: TodoViewModel) {
         try? fileCache.removeItem(by: model.item.id)
         try? fileCache.saveItems(to: fileName)
         data.removeAll { $0.item.id == model.item.id }
@@ -62,7 +64,7 @@ extension HomeViewModel: HomeViewModelDelegate {
 
 extension HomeViewModel: HomeViewModelProtocol {
 
-    func createTask(with text: String) {
+    @MainActor func createTask(with text: String) {
         let newModel = TodoViewModel(item: TodoItem(text: text))
         data.append(newModel)
         try? fileCache.add(item: newModel.item)
@@ -71,7 +73,7 @@ extension HomeViewModel: HomeViewModelProtocol {
         view?.insertRow(at: IndexPath(row: data.count - 1, section: 0))
     }
 
-    func toggleCompletedTasks() {
+    @MainActor func toggleCompletedTasks() {
         let sorted = data.filter { !$0.item.isFinished }
         let cleaned = data.enumerated().compactMap { $0.element.item.isFinished ? $0.offset : nil }
         let indices = cleaned.compactMap { IndexPath(row: $0, section: 0) }
@@ -87,6 +89,7 @@ extension HomeViewModel: HomeViewModelProtocol {
         setupHeader()
     }
 
+    @MainActor
     func openModal(with model: TodoViewModel? = nil) {
         guard let model = model else {
             let newModel = TodoViewModel(item: TodoItem(text: ""))
@@ -103,7 +106,8 @@ extension HomeViewModel: HomeViewModelProtocol {
         let navigationController = UINavigationController(rootViewController: controller)
         view?.present(modal: navigationController)
     }
-    
+
+    @MainActor
     func openInfoModal(with model: TodoViewModel? = nil) {
         guard let model = model else {
             let newModel = TodoViewModel(item: TodoItem(text: ""))
@@ -111,27 +115,23 @@ extension HomeViewModel: HomeViewModelProtocol {
             let controller = TodoModalViewController(viewModel: newModel)
             newModel.modal = controller
             let navigationController = UINavigationController(rootViewController: controller)
-            
             let transitionDelegate = CustomModalTransitionDelegate()
-            
+
             navigationController.transitioningDelegate = transitionDelegate
-            
             navigationController.modalPresentationStyle = .custom
-            
+
             view?.present(modal: navigationController)
             return
         }
-        
+
         let controller = TodoModalViewController(viewModel: model)
         model.modal = controller
         let navigationController = UINavigationController(rootViewController: controller)
-        
         let transitionDelegate = CustomModalTransitionDelegate()
-        
+
         navigationController.transitioningDelegate = transitionDelegate
-        
         navigationController.modalPresentationStyle = .custom
-        
+
         view?.present(modal: navigationController)
     }
 
@@ -157,7 +157,7 @@ extension HomeViewModel: HomeViewModelProtocol {
         view?.items = data
     }
 
-    func delete(at indexPath: IndexPath) {
+    @MainActor func delete(at indexPath: IndexPath) {
         guard let view = view else { return }
         let id = view.items[indexPath.row].item.id
         if !isHidden {
@@ -176,7 +176,7 @@ extension HomeViewModel: HomeViewModelProtocol {
         setupHeader()
     }
 
-    func toggleStatus(on model: TodoViewModel, at: IndexPath) {
+    @MainActor func toggleStatus(on model: TodoViewModel, at: IndexPath) {
         guard let view = view else { return }
         if !isHidden {
             model.state.isFinished.toggle()
@@ -195,7 +195,7 @@ extension HomeViewModel: HomeViewModelProtocol {
         setupHeader()
     }
 
-    func setupHeader() {
+    @MainActor func setupHeader() {
         let filtered = data.filter { $0.item.isFinished }
         let amount = filtered.count
         view?.setupHeader(title: isHidden ? "Показать" : "Скрыть", amount: amount)

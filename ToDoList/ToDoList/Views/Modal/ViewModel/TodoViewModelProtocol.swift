@@ -2,17 +2,17 @@ import UIKit
 
 protocol TodoViewModelProtocol {
 
-    func deadlineDidChange(isEnabled: Bool)
+    @MainActor func deadlineDidChange(isEnabled: Bool)
 
-    func deadLineDidClick()
+    @MainActor func deadLineDidClick()
 
-    func textDidChange(text: String)
+    @MainActor func textDidChange(text: String)
 
-    func importanceDidChange(importance: Importance)
+    @MainActor func importanceDidChange(importance: Importance)
 
-    func datePickerChanged(date: Date)
+    @MainActor func datePickerChanged(date: Date)
 
-    func saveButtonDidTap()
+    @MainActor func saveButtonDidTap()
 
-    func deleteButtonDidTap()
+    @MainActor func deleteButtonDidTap()
 }

@@ -4,13 +4,13 @@ protocol TodoModalProtocol: AnyObject {
     
     func configure(with state: TodoViewState)
     
-    func closeModal(animated: Bool)
+    @MainActor func closeModal(animated: Bool)
     
-    func showCalendar()
+    @MainActor func showCalendar()
     
-    func dismissCalendar()
+    @MainActor func dismissCalendar()
     
-    func setupDeadline(with date: Date)
+    @MainActor func setupDeadline(with date: Date)
 }
 
 final class TodoViewModel {
@@ -36,36 +36,36 @@ final class TodoViewModel {
 
 extension TodoViewModel: TodoViewModelProtocol {
     
-    func deadlineDidChange(isEnabled: Bool) {
+    @MainActor func deadlineDidChange(isEnabled: Bool) {
         state.deadline = isEnabled ? state.deadline ?? Date().dayAfter : nil
         isEnabled ? modal?.showCalendar() : modal?.dismissCalendar()
     }
     
-    func deadLineDidClick() {
+    @MainActor func deadLineDidClick() {
         if let deadline = state.deadline ?? Date().dayAfter {
             modal?.setupDeadline(with: deadline)
             modal?.showCalendar()
         }
     }
     
-    func textDidChange(text: String) {
+    @MainActor func textDidChange(text: String) {
         state.text = text
     }
     
-    func importanceDidChange(importance: Importance) {
+    @MainActor func importanceDidChange(importance: Importance) {
         state.importance = importance
     }
     
-    func datePickerChanged(date: Date) {
+    @MainActor func datePickerChanged(date: Date) {
         state.deadline = date
     }
     
-    func saveButtonDidTap() {
+    @MainActor func saveButtonDidTap() {
         modal?.closeModal(animated: true)
         delegate?.didUpdate(model: self, state: state)
     }
     
-    func deleteButtonDidTap() {
+    @MainActor func deleteButtonDidTap() {
         modal?.closeModal(animated: true)
         delegate?.didDelete(model: self)
     }

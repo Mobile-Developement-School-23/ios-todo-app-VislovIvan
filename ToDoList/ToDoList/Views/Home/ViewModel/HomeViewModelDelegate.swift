@@ -2,7 +2,7 @@ import Foundation
 
 protocol HomeViewModelDelegate: AnyObject {
     
-    func didUpdate(model: TodoViewModel, state: TodoViewState)
+    @MainActor func didUpdate(model: TodoViewModel, state: TodoViewState)
 
-    func didDelete(model: TodoViewModel)
+    @MainActor func didDelete(model: TodoViewModel)
 }

@@ -15,9 +15,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         configureNavbarTitle()
         window?.makeKeyAndVisible()
         
-        DDLog.add(DDOSLogger.sharedInstance)
-        dynamicLogLevel = .info
-        testLogger()
+//        DDLog.add(DDOSLogger.sharedInstance)
+//        dynamicLogLevel = .verbose
+//        testLogger()
     }
     
     func sceneDidDisconnect(_: UIScene) {}

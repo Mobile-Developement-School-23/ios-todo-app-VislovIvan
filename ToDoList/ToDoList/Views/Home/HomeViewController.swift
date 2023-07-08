@@ -88,44 +88,44 @@ extension HomeViewController {
 
 extension HomeViewController: HomeViewControllerProtocol {
 
-    func setupHeader(title: String, amount: Int) {
+    @MainActor func setupHeader(title: String, amount: Int) {
         headerView.setButtonTitle(with: title)
         headerView.setTask(with: amount)
     }
 
-    func reloadRows(at indexPathes: [IndexPath]) {
+    @MainActor func reloadRows(at indexPathes: [IndexPath]) {
         tableView.reloadRows(at: indexPathes, with: .none)
     }
 
-    func reloadSection() {
+    @MainActor func reloadSection() {
         tableView.reloadSections(.init(integer: 0), with: .fade)
     }
 
-    func present(modal: UINavigationController) {
+    @MainActor func present(modal: UINavigationController) {
         self.present(modal, animated: true)
     }
 
-    func reloadData() {
+    @MainActor func reloadData() {
         tableView.reloadData()
     }
 
-    func reloadRow(at indexPath: IndexPath) {
+    @MainActor func reloadRow(at indexPath: IndexPath) {
         tableView.reloadRows(at: [indexPath], with: .none)
     }
 
-    func deleteRow(at indexPath: IndexPath) {
+    @MainActor func deleteRow(at indexPath: IndexPath) {
         tableView.deleteRows(at: [indexPath], with: .none)
     }
 
-    func deleteRows(at indexPathes: [IndexPath]) {
+    @MainActor func deleteRows(at indexPathes: [IndexPath]) {
         tableView.deleteRows(at: indexPathes, with: .fade)
     }
 
-    func insertRow(at indexPath: IndexPath) {
+    @MainActor func insertRow(at indexPath: IndexPath) {
         tableView.insertRows(at: [indexPath], with: .none)
     }
 
-    func insertRows(at indexPathes: [IndexPath]) {
+    @MainActor func insertRows(at indexPathes: [IndexPath]) {
         tableView.insertRows(at: indexPathes, with: .fade)
     }
 
