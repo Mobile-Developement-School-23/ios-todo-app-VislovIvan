@@ -1,9 +1,9 @@
 import Foundation
 
-enum Importance: String {
-    case normal
-    case important
-    case unimportant
+enum Importance: String, Codable {
+    case normal = "basic"
+    case important = "important"
+    case unimportant = "low"
 }
 
 struct TodoItem: Equatable {

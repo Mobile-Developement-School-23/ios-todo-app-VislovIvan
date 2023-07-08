@@ -15,9 +15,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         configureNavbarTitle()
         window?.makeKeyAndVisible()
         
-//        DDLog.add(DDOSLogger.sharedInstance)
+        DDLog.add(DDOSLogger.sharedInstance)
 //        dynamicLogLevel = .verbose
-//        testLogger()
+        testLogger()
+        
+        if let deviceID = UIDevice.current.identifierForVendor?.uuidString {
+            print(deviceID)
+        } else {
+            print("No device ID available")
+        }
     }
     
     func sceneDidDisconnect(_: UIScene) {}

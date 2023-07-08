@@ -12,13 +12,13 @@ protocol HomeViewModelProtocol: AnyObject {
 
     @MainActor func delete(at indexPath: IndexPath)
 
+    @MainActor func toggleCompletedTasks()
+
     @MainActor func toggleStatus(on model: TodoViewModel, at: IndexPath)
 
     @MainActor func openModal(with model: TodoViewModel?)
 
     @MainActor func openInfoModal(with model: TodoViewModel?)
-
-    @MainActor func toggleCompletedTasks()
 
     @MainActor func setupHeader()
 }

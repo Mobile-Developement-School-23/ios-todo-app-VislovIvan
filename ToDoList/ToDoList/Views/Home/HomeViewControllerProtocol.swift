@@ -18,9 +18,13 @@ protocol HomeViewControllerProtocol: AnyObject {
 
     @MainActor func deleteRows(at indexPathes: [IndexPath])
 
-    @MainActor func insertRow(at indexPath: IndexPath)
+    func insertRow(at indexPath: IndexPath)
 
     @MainActor func insertRows(at indexPathes: [IndexPath])
     
     @MainActor func present(modal: UINavigationController)
+    
+    func showStatusIndicator()
+
+    func hideStatusIndicator()
 }
