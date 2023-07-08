@@ -179,7 +179,7 @@ extension HomeViewModel: HomeViewModelProtocol {
 }
 
 private extension HomeViewModel {
-        
+    
     func fetchItemsByPatch() async {
         fileCache.load(from: fileName) { [weak self] result in
             switch result {
@@ -191,11 +191,11 @@ private extension HomeViewModel {
                 self?.network.patch(with: apiModel) { res in
                     switch res {
                     case let .success(networkModel):
-                        DDLogInfo("Получили смерженные данные из сети")
+                        DDLogInfo("Получили данные из сети")
                         Variables.shared.revision = networkModel.revision
                         self?.manageFetchedModels(models: networkModel)
                     case let .failure(error):
-                        DDLogInfo("Словили приколюху от сервера (PATCH всех элементов)")
+                        DDLogInfo("PATCH всех элементов")
                         DDLogError(error)
                     }
                     self?.hideStatusIndicator()
@@ -210,11 +210,11 @@ private extension HomeViewModel {
         network.get { [weak self] res in
             switch res {
             case let .success(networkModel):
-                DDLogInfo("Получили достоверные данные из сети")
+                DDLogInfo("Получили данные из сети")
                 Variables.shared.revision = networkModel.revision
                 self?.manageFetchedModels(models: networkModel)
             case let .failure(error):
-                DDLogInfo("Словили приколюху от сервера (GET всех элементов)")
+                DDLogInfo("GET всех элементов")
                 DDLogError(error)
             }
             self?.hideStatusIndicator()
@@ -244,7 +244,7 @@ private extension HomeViewModel {
                 DDLogInfo("Элемент успешно добавлен на сервер")
                 Variables.shared.revision = networkModel.revision
             case let .failure(error):
-                DDLogInfo("Словили приколюху от сервера (Добавление элемента)")
+                DDLogInfo("Добавление элемента")
                 DDLogError(error)
                 if error as? ApiError == .wrongRequest {
                     self?.retryWithPatch()
@@ -269,7 +269,7 @@ private extension HomeViewModel {
                 DDLogInfo("Элемент успешно обновлен на сервере")
                 Variables.shared.revision = networkModel.revision
             case let .failure(error):
-                DDLogInfo("Словили приколюху от сервера (Обновление элемента)")
+                DDLogInfo("Обновление элемента")
                 DDLogError(error)
             }
             self?.hideStatusIndicator()
@@ -390,7 +390,7 @@ private extension HomeViewModel {
             self.setupHeader()
         }
     }
-
+    
     func deleteItem(at indexPath: IndexPath) async {
         guard let view = view else { return }
         var id: String

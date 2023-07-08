@@ -3,11 +3,11 @@ import Foundation
 // MARK: - NetworkServiceProtocol
 
 final class NetworkingService: DefaultNetworkingService {
-
+    
     func getAllTodoItems(completion: @escaping (Result<[TodoItem], Error>) -> Void) {}
     func editTodoItem(_ item: TodoItem, completion: @escaping (Result<TodoItem, Error>) -> Void) {}
     func deleteTodoItem(at id: String, completion: @escaping (Result<TodoItem, Error>) -> Void) {}
-
+    
     func patch(with list: ApiTodoListModel, completion: @escaping (Result<ApiTodoListModel, Error>) -> Void) {
         Task {
             do {
@@ -22,10 +22,10 @@ final class NetworkingService: DefaultNetworkingService {
                 completion(.failure(error))
                 Variables.shared.isDirty = true
             }
-
+            
         }
     }
-
+    
     func get(completion: @escaping (Result<ApiTodoListModel, Error>) -> Void) {
         Task {
             do {
@@ -40,7 +40,7 @@ final class NetworkingService: DefaultNetworkingService {
             }
         }
     }
-
+    
     func delete(by id: String, completion: @escaping (Result<ApiTodoElementModel, Error>) -> Void) {
         Task {
             do {
@@ -55,7 +55,7 @@ final class NetworkingService: DefaultNetworkingService {
             }
         }
     }
-
+    
     func update(by element: ApiTodoElementModel, completion: @escaping (Result<ApiTodoElementModel, Error>) -> Void) {
         Task {
             do {
@@ -70,7 +70,7 @@ final class NetworkingService: DefaultNetworkingService {
             }
         }
     }
-
+    
     func add(by element: ApiTodoElementModel, completion: @escaping (Result<ApiTodoElementModel, Error>) -> Void) {
         Task {
             do {
@@ -116,7 +116,7 @@ private extension NetworkingService {
         let model = try JSONDecoder().decode(T.self, from: data)
         return model
     }
-
+    
     func ecsponentialRetry<T>(
         minDelay: Double = 2,
         factor: Double = 1.5,
@@ -142,7 +142,7 @@ private extension NetworkingService {
         }
         return try await action()
     }
-
+    
     func assert(response: HTTPURLResponse) -> Error? {
         switch response.statusCode {
         case 400:
@@ -157,14 +157,14 @@ private extension NetworkingService {
             return nil
         }
     }
-
+    
     func getItems() async throws -> ApiTodoListModel {
         return try await sendRequest(
             method: "GET",
             url: "https://beta.mrdekk.ru/todobackend/list"
         )
     }
-
+    
     func patch(with list: ApiTodoListModel) async throws -> ApiTodoListModel {
         let body = try JSONEncoder().encode(list)
         return try await sendRequest(
@@ -173,14 +173,14 @@ private extension NetworkingService {
             body: body
         )
     }
-
+    
     func delete(by id: String) async throws -> ApiTodoElementModel {
         return try await sendRequest(
             method: "DELETE",
             url: "https://beta.mrdekk.ru/todobackend/list/\(id)"
         )
     }
-
+    
     func update(by element: ApiTodoElementModel) async throws -> ApiTodoElementModel {
         let body = try JSONEncoder().encode(element)
         let id = element.element.id
@@ -190,7 +190,7 @@ private extension NetworkingService {
             body: body
         )
     }
-
+    
     func add(new element: ApiTodoElementModel) async throws -> ApiTodoElementModel {
         let body = try JSONEncoder().encode(element)
         return try await sendRequest(
@@ -199,5 +199,4 @@ private extension NetworkingService {
             body: body
         )
     }
-
 }

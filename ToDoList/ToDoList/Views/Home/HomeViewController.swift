@@ -42,10 +42,6 @@ final class HomeViewController: UIViewController {
     }()
 
     private let headerView = TaskCellHeader()
-    
-    deinit {
-        print("deinit")
-    }
 }
 
 extension HomeViewController {

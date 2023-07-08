@@ -16,6 +16,10 @@
 		CE4A47212A586605009146AA /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4A47202A586605009146AA /* Debug.swift */; };
 		CE4A47232A58664A009146AA /* DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4A47222A58664A009146AA /* DispatchQueue.swift */; };
 		CE4A47252A586B78009146AA /* Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4A47242A586B78009146AA /* Variables.swift */; };
+		CE4A47272A58BE6F009146AA /* TodoItemURLSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4A47262A58BE6F009146AA /* TodoItemURLSessionTests.swift */; };
+		CE4A47292A58E4D5009146AA /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = CE4A47282A58E4D5009146AA /* CocoaLumberjack */; };
+		CE4A472B2A58E4D5009146AA /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CE4A472A2A58E4D5009146AA /* CocoaLumberjackSwift */; };
+		CE4A472D2A58E4D5009146AA /* CocoaLumberjackSwiftLogBackend in Frameworks */ = {isa = PBXBuildFile; productRef = CE4A472C2A58E4D5009146AA /* CocoaLumberjackSwiftLogBackend */; };
 		CE59FDA12A4F80D5001B7750 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = CE59FDA02A4F80D5001B7750 /* CocoaLumberjack */; };
 		CE59FDA32A4F80D5001B7750 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CE59FDA22A4F80D5001B7750 /* CocoaLumberjackSwift */; };
 		CE59FDA52A4F80D5001B7750 /* CocoaLumberjackSwiftLogBackend in Frameworks */ = {isa = PBXBuildFile; productRef = CE59FDA42A4F80D5001B7750 /* CocoaLumberjackSwiftLogBackend */; };
@@ -73,6 +77,7 @@
 		CE4A47202A586605009146AA /* Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
 		CE4A47222A58664A009146AA /* DispatchQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchQueue.swift; sourceTree = "<group>"; };
 		CE4A47242A586B78009146AA /* Variables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variables.swift; sourceTree = "<group>"; };
+		CE4A47262A58BE6F009146AA /* TodoItemURLSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItemURLSessionTests.swift; sourceTree = "<group>"; };
 		CE5C01E32A462668006E8463 /* ColorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
 		CE6CD6E62A5727B10096BE00 /* URLSession+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Extension.swift"; sourceTree = "<group>"; };
 		CECA24802A3B9B1D002EE7B5 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,6 +129,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE4A472B2A58E4D5009146AA /* CocoaLumberjackSwift in Frameworks */,
+				CE4A472D2A58E4D5009146AA /* CocoaLumberjackSwiftLogBackend in Frameworks */,
+				CE4A47292A58E4D5009146AA /* CocoaLumberjack in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +306,7 @@
 		CECA24A02A3BEC88002EE7B5 /* TodoItemTests */ = {
 			isa = PBXGroup;
 			children = (
+				CE4A47262A58BE6F009146AA /* TodoItemURLSessionTests.swift */,
 			);
 			path = TodoItemTests;
 			sourceTree = "<group>";
@@ -382,6 +391,11 @@
 				CECA24A42A3BEC88002EE7B5 /* PBXTargetDependency */,
 			);
 			name = TodoItemTests;
+			packageProductDependencies = (
+				CE4A47282A58E4D5009146AA /* CocoaLumberjack */,
+				CE4A472A2A58E4D5009146AA /* CocoaLumberjackSwift */,
+				CE4A472C2A58E4D5009146AA /* CocoaLumberjackSwiftLogBackend */,
+			);
 			productName = TodoItemTests;
 			productReference = CECA249F2A3BEC88002EE7B5 /* TodoItemTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -555,6 +569,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE4A47272A58BE6F009146AA /* TodoItemURLSessionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -845,6 +860,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		CE4A47282A58E4D5009146AA /* CocoaLumberjack */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE59FD9F2A4F80D4001B7750 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjack;
+		};
+		CE4A472A2A58E4D5009146AA /* CocoaLumberjackSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE59FD9F2A4F80D4001B7750 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjackSwift;
+		};
+		CE4A472C2A58E4D5009146AA /* CocoaLumberjackSwiftLogBackend */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE59FD9F2A4F80D4001B7750 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjackSwiftLogBackend;
+		};
 		CE59FDA02A4F80D5001B7750 /* CocoaLumberjack */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CE59FD9F2A4F80D4001B7750 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
