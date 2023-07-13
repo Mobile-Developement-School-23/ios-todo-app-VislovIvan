@@ -1,57 +1,71 @@
 import Foundation
-import CocoaLumberjackSwift
+import SQLite
 
 final class FileCache {
-    var items: [TodoItem] = []
-    
     private let fileName: String
-    private let timerTime = 3.0
-    private let globalQueue = DispatchQueue(label: "filecacheQueue", attributes: .concurrent)
-    private let mainQueue = DispatchQueue.main
+    private let tableName = "Todos"
+    private let id = Expression<String>("id")
+    private let text = Expression<String>("text")
+    private let importance = Expression<String>("importance")
+    private let deadline = Expression<Date?>("deadline")
+    private let isFinished = Expression<Bool>("is_finished")
+    private let createdAt = Expression<Date>("created_at")
+    private let changedAt = Expression<Date?>("changed_at")
+    
+    private lazy var table = Table(tableName)
     
     init(fileName: String) {
         self.fileName = fileName
     }
 }
 
-// MARK: - FileCacheServiceProtocol
+// MARK: - FileCacheProtocol
 
-extension FileCache: FileCacheServiceProtocol {
-
-    func get(by id: String) -> TodoItem? {
-        return items.first(where: { $0.id == id })
-    }
+extension FileCache: FileCacheProtocol {
     
     func change(item: TodoItem) throws {
-        guard let index = items.firstIndex(where: { $0.id == item.id }) else { return }
-        items.remove(at: index)
-        items.insert(item, at: index)
+        let dbItem = table.filter(id == item.id)
+        try Database.shared.connection?.run(dbItem.update(
+            text <- item.text,
+            importance <- item.importance.rawValue,
+            deadline <- item.deadline,
+            isFinished <- item.isFinished,
+            createdAt <- item.createdAt,
+            changedAt <- item.changedAt
+        ))
     }
     
     func add(item: TodoItem) throws {
-        if items.first(where: { $0.id == item.id }) != nil {
-            throw FileCacheError.itemAlreadyExist
-        }
-        
-        items.append(item)
+        try insert(item: item)
     }
     
-    func removeItem(by id: String) throws {
-        items.removeAll { item in
-            return item.id == id
+    func add(items: [TodoItem]) throws {
+        try insert(items: items)
+    }
+    
+    func remove(by id: String) throws {
+        let item = table.filter(self.id == id)
+        try Database.shared.connection?.run(item.delete())
+    }
+    
+    func load() throws -> [TodoItem] {
+        guard let db = Database.shared.connection else { throw DatabaseError.connectionFaild }
+        let items = try db.prepare(table)
+        return items.map {
+            TodoItem(
+                id: $0[id],
+                text: $0[text],
+                importance: Importance(rawValue: $0[importance]) ?? .normal,
+                deadline: $0[deadline],
+                isFinished: $0[isFinished],
+                createdAt: $0[createdAt],
+                changedAt: $0[changedAt]
+            )
         }
     }
     
-    func save(to file: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        globalQueue.async {
-            self.saveItems(to: file, completion: completion)
-        }
-    }
-    
-    func load(from file: String, completion: @escaping (Result<[TodoItem], Error>) -> Void) {
-        globalQueue.async(flags: .barrier) {
-            self.loadItems(from: file, completion: completion)
-        }
+    func dropTable() throws {
+        try Database.shared.connection?.run(table.delete())
     }
 }
 
@@ -59,56 +73,33 @@ extension FileCache: FileCacheServiceProtocol {
 
 private extension FileCache {
     
-    func convertObjectsIntoString() -> String {
-        let objects: [String] = items.map {
-            $0.jsonString
-        }
-        
-        let pairs = objects.joined(separator: ",")
-        return "[\(pairs)]"
+    func insert(item: TodoItem) throws {
+        let insert = table.insert(
+            id <- item.id,
+            text <- item.text,
+            importance <- item.importance.rawValue,
+            deadline <- item.deadline,
+            isFinished <- item.isFinished,
+            createdAt <- item.createdAt,
+            changedAt <- item.changedAt
+        )
+        _ = try Database.shared.connection?.run(insert)
     }
     
-    func saveItems(to file: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        var result: Result<Void, Error> = .failure(FileCacheError.undefined)
-        defer { completion(result) }
-        do {
-            guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-                throw FileCacheError.noDocumentDirectory
+    func insert(items: [TodoItem]) throws {
+        _ = try Database.shared.connection?.run(table.insertMany(
+            or: .fail,
+            items.map {
+                [
+                    id <- $0.id,
+                    text <- $0.text,
+                    importance <- $0.importance.rawValue,
+                    deadline <- $0.deadline,
+                    isFinished <- $0.isFinished,
+                    createdAt <- $0.createdAt,
+                    changedAt <- $0.changedAt
+                ]
             }
-            let pathWithFilename = documentDirectory.appendingPathComponent(file)
-            let jsonString = self.convertObjectsIntoString()
-            try jsonString.write(to: pathWithFilename, atomically: true, encoding: .utf8)
-            result = .success(())
-        } catch {
-            result = .failure(error)
-        }
-    }
-    
-    func loadItems(from file: String, completion: @escaping (Result<[TodoItem], Error>) -> Void) {
-        var result: Result<[TodoItem], Error> = .failure(FileCacheError.undefined)
-        defer { completion(result) }
-        do {
-            guard let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-                throw FileCacheError.noDocumentDirectory
-            }
-            
-            let fileURL = dir.appendingPathComponent(file)
-            
-            let text = try String(contentsOf: fileURL, encoding: .utf8)
-            guard let data = text.data(using: .utf8) else {
-                throw FileCacheError.invalidJson
-            }
-            
-            guard let jsonArray = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] else {
-                throw FileCacheError.invalidJson
-            }
-            let items = jsonArray.compactMap {
-                TodoItem.parse(json: $0)
-            }
-            self.items = items
-            result = .success(items)
-        } catch {
-            result = .failure(error)
-        }
+        ))
     }
 }
