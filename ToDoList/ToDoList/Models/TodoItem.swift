@@ -211,3 +211,39 @@ extension TodoItem {
       )
   }
 }
+
+extension TodoItem {
+    init?(from entity: TodoItemEntity) {
+        guard let id = entity.id,
+              let text = entity.text,
+              let createdAt = entity.createdAt else {
+            return nil
+        }
+
+        self.id = id
+        self.text = text
+        self.createdAt = createdAt
+
+        if let importanceValue = entity.importance {
+            self.importance = Importance(rawValue: importanceValue) ?? .normal
+        } else {
+            self.importance = .normal
+        }
+
+        self.deadline = entity.deadline
+        self.isFinished = entity.isFinished
+        self.changedAt = entity.changedAt
+    }
+}
+
+extension TodoItemEntity {
+    func configure(from item: TodoItem) {
+        id = item.id
+        text = item.text
+        importance = item.importance.rawValue
+        deadline = item.deadline
+        isFinished = item.isFinished
+        createdAt = item.createdAt
+        changedAt = item.changedAt
+    }
+}
