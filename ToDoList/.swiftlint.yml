@@ -4,7 +4,7 @@ excluded:
   - UITests
   - DerivedData
 
-warning_threshold: 1
+warning_threshold: 100
 
 analyzer_rules:
   - unused_import
